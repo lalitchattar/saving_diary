@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/module/more/module/general/view/general_screen.dart';
+import 'package:saving_diary/app/test/bottom_sheet.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -94,6 +95,27 @@ class MoreScreen extends StatelessWidget {
                   trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                   title: Text(
                     "Merchant",
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: colorScheme.onSurface,
+                      letterSpacing: 0.15,
+                    ),
+                  ),
+                  dense: true,
+                  visualDensity: const VisualDensity(vertical: -2),
+                ),
+                Divider(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 0,
+                  ),
+                  leading: HugeIcon(icon: HugeIcons.strokeRoundedLabel),
+                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  title: Text(
+                    "Label",
                     style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w400,
                       color: colorScheme.onSurface,

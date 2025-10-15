@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:saving_diary/app/custom/widget/view/theme_selection_screen.dart';
+
+import '../../../../../custom/widget/view/currency_selection_screen.dart';
+import '../../../../../custom/widget/view/date_format_selection_screen.dart';
+import '../../../../../custom/widget/view/first_day_of_week_selection_screen.dart';
+import '../../../../../custom/widget/view/language_selection_screen.dart';
+import '../../../../../custom/widget/view/number_format_selection_screen.dart';
+
 
 class GeneralScreen extends StatelessWidget {
   const GeneralScreen({super.key});
@@ -32,10 +40,10 @@ class GeneralScreen extends StatelessWidget {
                       horizontal: 20,
                       vertical: 0,
                     ),
-                    leading: HugeIcon(
-                      icon: HugeIcons.strokeRoundedMoney01,
+                    leading: HugeIcon(icon: HugeIcons.strokeRoundedMoney01),
+                    trailing: HugeIcon(
+                      icon: HugeIcons.strokeRoundedArrowRight01,
                     ),
-                    trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                     title: Text(
                       "Currency",
                       style: textTheme.bodyLarge?.copyWith(
@@ -46,6 +54,9 @@ class GeneralScreen extends StatelessWidget {
                     ),
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
+                    onTap: () {
+                      _showCurrencyBottomSheet(context);
+                    },
                   ),
                 ),
                 Divider(
@@ -68,6 +79,9 @@ class GeneralScreen extends StatelessWidget {
                   ),
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
+                  onTap: (){
+                    _showCurrencySelectionList(context, colorScheme);
+                  },
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),
@@ -77,7 +91,9 @@ class GeneralScreen extends StatelessWidget {
                     horizontal: 20,
                     vertical: 0,
                   ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedArrangeByNumbers19),
+                  leading: HugeIcon(
+                    icon: HugeIcons.strokeRoundedArrangeByNumbers19,
+                  ),
                   trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                   title: Text(
                     "Decimal Place",
@@ -89,6 +105,9 @@ class GeneralScreen extends StatelessWidget {
                   ),
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+                    _showNumberFormatBottomSheet(context);
+                  },
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),
@@ -110,6 +129,9 @@ class GeneralScreen extends StatelessWidget {
                   ),
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+                    _showFirstDayOfWeekSheet(context);
+                  },
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),
@@ -119,7 +141,9 @@ class GeneralScreen extends StatelessWidget {
                     horizontal: 20,
                     vertical: 0,
                   ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedLanguageCircle),
+                  leading: HugeIcon(
+                    icon: HugeIcons.strokeRoundedLanguageCircle,
+                  ),
                   trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                   title: Text(
                     "Language",
@@ -131,6 +155,9 @@ class GeneralScreen extends StatelessWidget {
                   ),
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
+                  onTap: (){
+                    _showLocaleSelectionSheet(context);
+                  },
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),
@@ -143,7 +170,9 @@ class GeneralScreen extends StatelessWidget {
                       vertical: 0,
                     ),
                     leading: HugeIcon(icon: HugeIcons.strokeRoundedColors),
-                    trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                    trailing: HugeIcon(
+                      icon: HugeIcons.strokeRoundedArrowRight01,
+                    ),
                     title: Text(
                       "Theme",
                       style: textTheme.bodyLarge?.copyWith(
@@ -154,13 +183,134 @@ class GeneralScreen extends StatelessWidget {
                     ),
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
+                    onTap: () {
+                      _showThemeSheet(context);
+                    },
                   ),
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
+
+  void _showCurrencySelectionList(BuildContext context, ColorScheme colorSchema) {
+    final height = MediaQuery.of(context).size.height * 0.7;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,       // allow full height control
+      isDismissible: false,           // disable tap outside to close
+      enableDrag: false,              // disable swipe down to close
+      backgroundColor: Colors.transparent, // transparent to allow rounded corners
+      builder: (context) => SizedBox(
+        height: height,
+        child: DateFormatBottomSheet(
+          onFormatSelected: (format) {
+            debugPrint('Selected Format: $format');
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showCurrencyBottomSheet(BuildContext context) {
+    final height = MediaQuery.of(context).size.height * 0.7;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SizedBox(
+        height: height,
+        child: CurrencyBottomSheet(
+          onCurrencySelected: (symbol) {
+            debugPrint('Selected Currency: $symbol');
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showNumberFormatBottomSheet(BuildContext context) {
+    final height = MediaQuery.of(context).size.height * 0.7;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SizedBox(
+        height: height,
+        child: NumberFormatBottomSheet(
+          onFormatSelected: (format) {
+            debugPrint('Selected Number Format: $format');
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showLocaleSelectionSheet(BuildContext context) {
+    final height = MediaQuery.of(context).size.height * 0.7;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SizedBox(
+        height: height,
+        child: LocaleSelectionBottomSheet(
+          onLocaleSelected: (locale) {
+            debugPrint('Selected Locale: ${locale.languageCode}_${locale.countryCode}');
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showFirstDayOfWeekSheet(BuildContext context) {
+    final height = MediaQuery.of(context).size.height * 0.6;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SizedBox(
+        height: height,
+        child: FirstDayOfWeekBottomSheet(
+          onDaySelected: (day) {
+            debugPrint('Selected First Day: $day');
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showThemeSheet(BuildContext context) {
+    final height = MediaQuery.of(context).size.height * 0.6;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => ThemeSelectionBottomSheet(
+        onThemeSelected: (theme) {
+          debugPrint('Selected Theme: $theme');
+        },
+      ),
+    );
+  }
+
+
+
 }
