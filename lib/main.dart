@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = TextTheme.primaryOf(context);
     MaterialTheme materialTheme = MaterialTheme(textTheme);
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Money Diary',
       theme: MaterialTheme(textTheme).light(),
       home: const MainView(),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:saving_diary/app/module/more/module/general/view/general_screen.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -171,6 +173,7 @@ class MoreScreen extends StatelessWidget {
                     ),
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
+                    onTap: () {Get.to(GeneralScreen());},
                   ),
                 ),
                 Divider(
