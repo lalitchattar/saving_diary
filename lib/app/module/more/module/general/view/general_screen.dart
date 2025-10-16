@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:saving_diary/app/custom/widget/view/theme_selection_screen.dart';
+import 'package:saving_diary/app/module/more/module/general/view/currency_selection_screen.dart';
+import 'package:saving_diary/app/module/more/module/general/view/date_format_selection_screen.dart';
+import 'package:saving_diary/app/module/more/module/general/view/first_day_of_week_selection_screen.dart';
+import 'package:saving_diary/app/module/more/module/general/view/language_selection_screen.dart';
+import 'package:saving_diary/app/module/more/module/general/view/number_format_selection_screen.dart';
+import 'package:saving_diary/app/module/more/module/general/view/theme_selection_screen.dart';
 
-import '../../../../../custom/widget/view/currency_selection_screen.dart';
-import '../../../../../custom/widget/view/date_format_selection_screen.dart';
-import '../../../../../custom/widget/view/first_day_of_week_selection_screen.dart';
-import '../../../../../custom/widget/view/language_selection_screen.dart';
-import '../../../../../custom/widget/view/number_format_selection_screen.dart';
 
 
 class GeneralScreen extends StatelessWidget {
