@@ -393,7 +393,6 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
   }
 
   void _showThemeSelectionList(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 0.6;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

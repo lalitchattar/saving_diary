@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 class ThemeSelectionBottomSheet extends StatelessWidget {
   final Function(String) onThemeSelected;

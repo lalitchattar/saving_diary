@@ -5,11 +5,15 @@ import 'package:saving_diary/app/module/main/view/main_view.dart';
 import 'package:saving_diary/app/module/more/module/general/controller/general_setting_controller.dart';
 import 'package:saving_diary/theme/theme.dart';
 
+import 'app/data/db/database_helper.dart';
+import 'app/module/more/module/label/controller/label_controller.dart';
+
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(BottomNavigationController());
+  Get.lazyPut(() => LabelController());
 
   final generalSettingsController = Get.put(GeneralSettingsController());
 
@@ -18,17 +22,42 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.detached) {
+      DatabaseHelper().close();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    DatabaseHelper().close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = TextTheme.primaryOf(context);
-    MaterialTheme materialTheme = MaterialTheme(textTheme);
+    final textTheme = TextTheme.primaryOf(context);
+    final materialTheme = MaterialTheme(textTheme);
+
     return GetMaterialApp(
       title: 'Money Diary',
-      theme: MaterialTheme(textTheme).light(),
+      theme: materialTheme.light(),
       home: const MainView(),
     );
   }
