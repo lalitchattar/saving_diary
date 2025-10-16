@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saving_diary/app/module/main/controller/bottom_navigation_controller.dart';
 import 'package:saving_diary/app/module/main/view/main_view.dart';
+import 'package:saving_diary/app/module/more/module/general/controller/general_setting_controller.dart';
 import 'package:saving_diary/theme/theme.dart';
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
   Get.put(BottomNavigationController());
+
+  final generalSettingsController = Get.put(GeneralSettingsController());
+
+  await generalSettingsController.loadSettings();
+
   runApp(const MyApp());
 }
 

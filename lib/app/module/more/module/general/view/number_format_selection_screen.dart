@@ -18,6 +18,7 @@ class NumberFormatBottomSheet extends StatelessWidget {
 
     // List of number formats
     final formats = [
+      "#.##",
       '#,###.##',
       '0.00',
       '#,##0',

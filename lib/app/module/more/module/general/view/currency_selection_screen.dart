@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CurrencyBottomSheet extends StatelessWidget {
-  final Function(String) onCurrencySelected;
+  final Function(String, String) onCurrencySelected;
+
 
   const CurrencyBottomSheet({super.key, required this.onCurrencySelected});
 
@@ -105,7 +106,7 @@ class CurrencyBottomSheet extends StatelessWidget {
                             ),
                             onTap: () {
                               Navigator.pop(context);
-                              onCurrencySelected(currency['symbol']!);
+                              onCurrencySelected(currency['symbol']!, currency['country']!);
                             },
                           );
                         },

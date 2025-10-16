@@ -195,7 +195,7 @@ class MoreScreen extends StatelessWidget {
                     ),
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
-                    onTap: () {Get.to(GeneralScreen());},
+                    onTap: () {Get.to(() => GeneralScreen());},
                   ),
                 ),
                 Divider(

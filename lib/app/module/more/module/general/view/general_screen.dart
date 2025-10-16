@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:saving_diary/app/module/more/module/general/controller/general_setting_controller.dart';
 import 'package:saving_diary/app/module/more/module/general/view/currency_selection_screen.dart';
 import 'package:saving_diary/app/module/more/module/general/view/date_format_selection_screen.dart';
 import 'package:saving_diary/app/module/more/module/general/view/first_day_of_week_selection_screen.dart';
@@ -9,7 +11,7 @@ import 'package:saving_diary/app/module/more/module/general/view/theme_selection
 
 
 
-class GeneralScreen extends StatelessWidget {
+class GeneralScreen extends GetView<GeneralSettingsController> {
   const GeneralScreen({super.key});
 
   @override
@@ -41,8 +43,22 @@ class GeneralScreen extends StatelessWidget {
                       vertical: 0,
                     ),
                     leading: HugeIcon(icon: HugeIcons.strokeRoundedMoney01),
-                    trailing: HugeIcon(
-                      icon: HugeIcons.strokeRoundedArrowRight01,
+                    trailing: Obx(() => Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "${controller.getSetting("currency")} (${controller.getSetting("currencyCountryName")})",
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedArrowRight01,
+                          )
+                        ],
+                      ),
                     ),
                     title: Text(
                       "Currency",
@@ -55,7 +71,7 @@ class GeneralScreen extends StatelessWidget {
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
                     onTap: () {
-                      _showCurrencyBottomSheet(context);
+                      _showCurrencySelectionList(context);
                     },
                   ),
                 ),
@@ -68,7 +84,23 @@ class GeneralScreen extends StatelessWidget {
                     vertical: 0,
                   ),
                   leading: HugeIcon(icon: HugeIcons.strokeRoundedCalendar01),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  trailing: Obx(() => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        controller.getSetting("dateFormat"),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowRight01,
+                      )
+                    ],
+                  ),
+                  ),
                   title: Text(
                     "Date Format",
                     style: textTheme.bodyLarge?.copyWith(
@@ -80,7 +112,7 @@ class GeneralScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: (){
-                    _showCurrencySelectionList(context, colorScheme);
+                    _showDateFormatSelectionList(context, colorScheme);
                   },
                 ),
                 Divider(
@@ -94,7 +126,23 @@ class GeneralScreen extends StatelessWidget {
                   leading: HugeIcon(
                     icon: HugeIcons.strokeRoundedArrangeByNumbers19,
                   ),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  trailing: Obx(() => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        controller.getSetting("decimalFormat"),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowRight01,
+                      )
+                    ],
+                  ),
+                  ),
                   title: Text(
                     "Decimal Place",
                     style: textTheme.bodyLarge?.copyWith(
@@ -106,7 +154,7 @@ class GeneralScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: () {
-                    _showNumberFormatBottomSheet(context);
+                    _showNumberFormatSelectionList(context);
                   },
                 ),
                 Divider(
@@ -118,7 +166,23 @@ class GeneralScreen extends StatelessWidget {
                     vertical: 0,
                   ),
                   leading: HugeIcon(icon: HugeIcons.strokeRoundedCalendarAdd01),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  trailing: Obx(() => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        controller.getSetting("firstDayOfWeek"),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowRight01,
+                      )
+                    ],
+                  ),
+                  ),
                   title: Text(
                     "First day of week",
                     style: textTheme.bodyLarge?.copyWith(
@@ -130,7 +194,7 @@ class GeneralScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: () {
-                    _showFirstDayOfWeekSheet(context);
+                    _showFirstDayOfWeekSelectionList(context);
                   },
                 ),
                 Divider(
@@ -144,7 +208,23 @@ class GeneralScreen extends StatelessWidget {
                   leading: HugeIcon(
                     icon: HugeIcons.strokeRoundedLanguageCircle,
                   ),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  trailing: Obx(() => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        controller.getSetting("language"),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowRight01,
+                      )
+                    ],
+                  ),
+                  ),
                   title: Text(
                     "Language",
                     style: textTheme.bodyLarge?.copyWith(
@@ -156,7 +236,7 @@ class GeneralScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: (){
-                    _showLocaleSelectionSheet(context);
+                    _showLocaleSelectionList(context);
                   },
                 ),
                 Divider(
@@ -170,8 +250,22 @@ class GeneralScreen extends StatelessWidget {
                       vertical: 0,
                     ),
                     leading: HugeIcon(icon: HugeIcons.strokeRoundedColors),
-                    trailing: HugeIcon(
-                      icon: HugeIcons.strokeRoundedArrowRight01,
+                    trailing: Obx(() => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          controller.getSetting("theme"),
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        HugeIcon(
+                          icon: HugeIcons.strokeRoundedArrowRight01,
+                        )
+                      ],
+                    ),
                     ),
                     title: Text(
                       "Theme",
@@ -184,7 +278,7 @@ class GeneralScreen extends StatelessWidget {
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
                     onTap: () {
-                      _showThemeSheet(context);
+                      _showThemeSelectionList(context);
                     },
                   ),
                 ),
@@ -196,26 +290,7 @@ class GeneralScreen extends StatelessWidget {
     );
   }
 
-  void _showCurrencySelectionList(BuildContext context, ColorScheme colorSchema) {
-    final height = MediaQuery.of(context).size.height * 0.7;
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,       // allow full height control
-      isDismissible: false,           // disable tap outside to close
-      enableDrag: false,              // disable swipe down to close
-      backgroundColor: Colors.transparent, // transparent to allow rounded corners
-      builder: (context) => SizedBox(
-        height: height,
-        child: DateFormatBottomSheet(
-          onFormatSelected: (format) {
-            debugPrint('Selected Format: $format');
-          },
-        ),
-      ),
-    );
-  }
-
-  void _showCurrencyBottomSheet(BuildContext context) {
+  void _showCurrencySelectionList(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 0.7;
 
     showModalBottomSheet(
@@ -227,15 +302,35 @@ class GeneralScreen extends StatelessWidget {
       builder: (context) => SizedBox(
         height: height,
         child: CurrencyBottomSheet(
-          onCurrencySelected: (symbol) {
-            debugPrint('Selected Currency: $symbol');
+          onCurrencySelected: (symbol, country) {
+            controller.updateSetting("currency", symbol);
+            controller.updateSetting("currencyCountryName", country);
           },
         ),
       ),
     );
   }
 
-  void _showNumberFormatBottomSheet(BuildContext context) {
+
+  void _showDateFormatSelectionList(BuildContext context, ColorScheme colorSchema) {
+    final height = MediaQuery.of(context).size.height * 0.7;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,       // allow full height control
+      isDismissible: false,           // disable tap outside to close
+      enableDrag: false,              // disable swipe down to close
+      backgroundColor: Colors.transparent, // transparent to allow rounded corners
+      builder: (context) => SizedBox(
+        height: height,
+        child: DateFormatBottomSheet(
+          onFormatSelected: (format) {
+            controller.updateSetting("dateFormat", format);
+          },
+        ),
+      ),
+    );
+  }
+  void _showNumberFormatSelectionList(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 0.7;
 
     showModalBottomSheet(
@@ -248,14 +343,14 @@ class GeneralScreen extends StatelessWidget {
         height: height,
         child: NumberFormatBottomSheet(
           onFormatSelected: (format) {
-            debugPrint('Selected Number Format: $format');
+            controller.updateSetting("decimalFormat", format);
           },
         ),
       ),
     );
   }
 
-  void _showLocaleSelectionSheet(BuildContext context) {
+  void _showLocaleSelectionList(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 0.7;
 
     showModalBottomSheet(
@@ -267,15 +362,17 @@ class GeneralScreen extends StatelessWidget {
       builder: (context) => SizedBox(
         height: height,
         child: LocaleSelectionBottomSheet(
-          onLocaleSelected: (locale) {
-            debugPrint('Selected Locale: ${locale.languageCode}_${locale.countryCode}');
+          onLocaleSelected: (locale, nativeName) {
+            controller.updateSetting("language", nativeName);
+            controller.updateSetting("languageCode", locale.languageCode);
+            controller.updateSetting("languageCountryCode", locale.countryCode!);
           },
         ),
       ),
     );
   }
 
-  void _showFirstDayOfWeekSheet(BuildContext context) {
+  void _showFirstDayOfWeekSelectionList(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 0.6;
 
     showModalBottomSheet(
@@ -288,14 +385,14 @@ class GeneralScreen extends StatelessWidget {
         height: height,
         child: FirstDayOfWeekBottomSheet(
           onDaySelected: (day) {
-            debugPrint('Selected First Day: $day');
+            controller.updateSetting("firstDayOfWeek", day);
           },
         ),
       ),
     );
   }
 
-  void _showThemeSheet(BuildContext context) {
+  void _showThemeSelectionList(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 0.6;
     showModalBottomSheet(
       context: context,
@@ -305,7 +402,7 @@ class GeneralScreen extends StatelessWidget {
       isDismissible: false,
       builder: (context) => ThemeSelectionBottomSheet(
         onThemeSelected: (theme) {
-          debugPrint('Selected Theme: $theme');
+          controller.updateSetting("theme", theme);
         },
       ),
     );

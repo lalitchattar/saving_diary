@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LocaleSelectionBottomSheet extends StatelessWidget {
-  final Function(Locale) onLocaleSelected;
+  final Function(Locale, String) onLocaleSelected;
 
   const LocaleSelectionBottomSheet({super.key, required this.onLocaleSelected});
 
@@ -103,7 +103,7 @@ class LocaleSelectionBottomSheet extends StatelessWidget {
                             ),
                             onTap: () {
                               Navigator.pop(context);
-                              onLocaleSelected(locale);
+                              onLocaleSelected(locale, nativeName);
                             },
                           );
                         },
