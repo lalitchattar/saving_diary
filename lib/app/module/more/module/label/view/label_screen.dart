@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saving_diary/app/module/more/module/label/view/add_label.dart';
+import 'package:saving_diary/app/module/more/module/label/view/edit_label.dart';
 import 'package:saving_diary/app/utils/utility.dart';
 
 import '../controller/label_controller.dart';
@@ -27,7 +28,7 @@ class LabelListScreen extends GetView<LabelController> {
       floatingActionButton: controller.labels.isNotEmpty ? FloatingActionButton.extended(
         icon: const Icon(Icons.add),
         label: const Text("Add Label"),
-        onPressed: () { Get.to(() => AddLabel()); },
+        onPressed: () { Get.to(() => AddLabelScreen()); },
       ) : null,
     ));
   }
@@ -66,7 +67,7 @@ class LabelListScreen extends GetView<LabelController> {
             const SizedBox(height: 24),
             FilledButton.icon(
               onPressed: () {
-                Get.to(() => AddLabel());
+                Get.to(() => AddLabelScreen());
               },
               icon: const Icon(Icons.add),
               label: const Text("Add Label"),
@@ -102,7 +103,8 @@ class LabelListScreen extends GetView<LabelController> {
             splashColor: colorScheme.primary.withOpacity(0.08),
             highlightColor: colorScheme.primary.withOpacity(0.04),
             onTap: () {
-              // Handle tap on label
+              controller.reset();
+              Get.to(() => EditLabelScreen(), arguments: label);
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),

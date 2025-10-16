@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class SingleTextInputScreen extends StatefulWidget {
   final String title;
   final String hintText;
+  final String? initialValue;
   final Future<String?> Function(String)? validator;
   final Function(String) onValidSubmit;
 
@@ -10,6 +11,7 @@ class SingleTextInputScreen extends StatefulWidget {
     super.key,
     required this.title,
     required this.hintText,
+    this.initialValue,
     this.validator,
     required this.onValidSubmit,
   });
@@ -19,7 +21,7 @@ class SingleTextInputScreen extends StatefulWidget {
 }
 
 class _SingleTextInputScreenState extends State<SingleTextInputScreen> {
-  final TextEditingController controller = TextEditingController();
+  late final TextEditingController controller = TextEditingController(text: widget.initialValue);
   String? errorMessage;
   bool isLoading = false;
 

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/module/more/module/general/view/general_screen.dart';
 import 'package:saving_diary/app/module/more/module/label/view/label_screen.dart';
+
+import '../module/label/controller/label_controller.dart';
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
 
@@ -124,7 +126,9 @@ class MoreScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: () {
-                    Get.to(() => LabelListScreen());
+                    Get.to(() => LabelListScreen(), binding: BindingsBuilder((){
+                      Get.lazyPut(() => LabelController(), fenix: true);
+                    }));
                   },
                 ),
                 Divider(

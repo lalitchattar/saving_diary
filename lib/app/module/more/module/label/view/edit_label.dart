@@ -4,21 +4,32 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/common/widget/color_picker_screen.dart';
 import 'package:saving_diary/app/common/widget/text_box_screen.dart';
 import 'package:saving_diary/app/common/widget/validation_message_screen.dart';
+import 'package:saving_diary/app/data/model/label_model.dart';
 import '../../../../../utils/utility.dart';
 import '../controller/label_controller.dart';
 
-class AddLabelScreen extends GetView<LabelController> {
-  const AddLabelScreen({super.key});
+class EditLabelScreen extends GetView<LabelController> {
+  EditLabelScreen({super.key});
 
+  final Label label = Get.arguments;
+
+  void _initializeController() {
+    if (controller.name.value.isEmpty) {
+      controller.name.value = label.name;
+      controller.color.value = label.color;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    _initializeController();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Label"), centerTitle: true),
+      appBar: AppBar(title: const Text("Update Label"), centerTitle: true),
       body: Column(
         children: [
           Expanded(
@@ -124,19 +135,9 @@ class AddLabelScreen extends GetView<LabelController> {
             padding: const EdgeInsets.all(16.0),
             child: FilledButton.tonalIcon(
               icon: const Icon(Icons.save_rounded),
-              label: const Text("Save"),
+              label: const Text("Update"),
               onPressed: () {
-                if(controller.name.value == '') {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    enableDrag: false,
-                    isDismissible: false,
-                    builder: (context) => ValidationMessageScreen(errorMessages: ["Name is required"]));
-                  return;
-                }
-                _saveLabel();
+                _updateLabel();
               },
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary, // set primary color
@@ -163,6 +164,7 @@ class AddLabelScreen extends GetView<LabelController> {
         isDismissible: false,
         builder: (context) => ColorPickerScreen(onColorSelected: (colorHexCode) {
           controller.color.value = colorHexCode;
+          label.color = colorHexCode;
         })
     );
   }
@@ -177,27 +179,30 @@ class AddLabelScreen extends GetView<LabelController> {
       builder: (context) => SingleTextInputScreen(
         title: 'Name',
         hintText: 'Provide Label Name',
+        initialValue: label.name,
         validator: (labelName) async {
           if (labelName.isEmpty) {
             return "Label name cannot be empty.";
           }
-          final exists = await controller.isNameExists(labelName);
-          if (exists) {
-            return "This label already exists.";
+          if(labelName != label.name) {
+            final exists = await controller.isNameExists(labelName);
+            if (exists) {
+              return "This label already exists.";
+            }
           }
+
           return null; // valid
         },
-
-        // ✅ Called only when valid
         onValidSubmit: (labelName) {
           controller.name.value = labelName;
+          label.name = labelName;
         },
       ),
     );
   }
 
-  _saveLabel() async {
-    await controller.createLabel();
+  _updateLabel() async {
+    await controller.updateLabel(id: label.id);
     controller.reset();
     Get.back();
   }

@@ -16,17 +16,31 @@ class LabelRepository {
     }
   }
 
-  Future<void> updateLabel(Label label) async {
+  Future<void> updateLabel(Label label, {List<String>? fieldsToUpdate}) async {
     try {
       final db = await dbHelper.database;
+
+      // Convert entire model to map
+      final fullMap = label.toMap();
+
+      // If specific fields provided → filter only those
+      final updateMap = fieldsToUpdate != null && fieldsToUpdate.isNotEmpty
+          ? Map.fromEntries(
+        fullMap.entries.where((e) => fieldsToUpdate.contains(e.key)),
+      )
+          : fullMap; // else, update all fields
       await db.update(
         'labels',
-        label.toMap(),
+        updateMap,
         where: 'id = ?',
         whereArgs: [label.id],
       );
     } catch (e, stack) {
-      appLogger.e('Error updating label id: ${label.id}', error: e, stackTrace: stack);
+      appLogger.e(
+        'Error updating label id: ${label.id}',
+        error: e,
+        stackTrace: stack,
+      );
     }
   }
 

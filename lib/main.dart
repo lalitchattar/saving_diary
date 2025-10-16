@@ -6,14 +6,12 @@ import 'package:saving_diary/app/module/more/module/general/controller/general_s
 import 'package:saving_diary/theme/theme.dart';
 
 import 'app/data/db/database_helper.dart';
-import 'app/module/more/module/label/controller/label_controller.dart';
 
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(BottomNavigationController());
-  Get.lazyPut(() => LabelController());
 
   final generalSettingsController = Get.put(GeneralSettingsController());
 
