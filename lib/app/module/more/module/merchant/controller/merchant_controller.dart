@@ -38,7 +38,7 @@ class MerchantController extends GetxController {
       await repository.createMerchant(merchant);
       await getAllMerchants();
     } catch (e, stack) {
-      appLogger.e('Error creating label:', error: e, stackTrace: stack);
+      appLogger.e('Error creating merchant:', error: e, stackTrace: stack);
     }
   }
 
@@ -53,13 +53,13 @@ class MerchantController extends GetxController {
       await repository.updateMerchant(merchant, fieldsToUpdate: fieldsToUpdate);
       await getAllMerchants();
     } catch (e, stack) {
-      appLogger.e('Error updating label id: $id', error: e, stackTrace: stack);
+      appLogger.e('Error updating merchant id: $id', error: e, stackTrace: stack);
     }
   }
 
   Future<bool> isNameExists(String merchantName) async {
-    final label = await repository.getMerchantByName(merchantName.trim());
-    return label != null;
+    final merchant = await repository.getMerchantByName(merchantName.trim());
+    return merchant != null;
   }
 
   void reset() {

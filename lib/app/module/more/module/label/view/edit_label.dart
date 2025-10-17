@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/common/widget/color_picker_screen.dart';
 import 'package:saving_diary/app/common/widget/text_box_screen.dart';
-import 'package:saving_diary/app/common/widget/validation_message_screen.dart';
 import 'package:saving_diary/app/data/model/label_model.dart';
 import '../../../../../utils/utility.dart';
 import '../controller/label_controller.dart';

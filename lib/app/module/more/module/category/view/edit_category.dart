@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/common/widget/text_box_screen.dart';
-import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
+import 'package:saving_diary/app/data/model/category_model.dart';
+import 'package:saving_diary/app/module/more/module/category/controller/category_controller.dart';
 import '../../../../../common/widget/icon_picker_screen.dart';
 import '../../../../../common/widget/option_selection_screen.dart';
 import '../../../../../common/widget/validation_message_screen.dart';
-import '../../../../../data/model/merchant_model.dart';
 import '../../../../../utils/huge_icon_sets.dart';
 
-class EditMerchantScreen extends GetView<MerchantController> {
-  EditMerchantScreen({super.key});
+class EditCategoryScreen extends GetView<CategoryController> {
+  EditCategoryScreen({super.key});
 
-  final Merchant merchant = Get.arguments;
+  final Category category = Get.arguments;
 
   void _initializeController() {
     if (controller.name.value.isEmpty) {
-      controller.name.value = merchant.name;
-      controller.type.value = merchant.type;
-      controller.icon.value = merchant.icon!;
+      controller.name.value = category.name;
+      controller.type.value = category.type;
+      controller.icon.value = category.icon!;
     }
   }
 
@@ -31,7 +31,7 @@ class EditMerchantScreen extends GetView<MerchantController> {
 
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Update Merchant"), centerTitle: true),
+      appBar: AppBar(title: const Text("Update Category"), centerTitle: true),
       body: Column(
         children: [
           Expanded(
@@ -123,7 +123,7 @@ class EditMerchantScreen extends GetView<MerchantController> {
                         dense: true,
                         visualDensity: const VisualDensity(vertical: -2),
                         onTap: () {
-                          _showMerchantTypeScreen(context);
+                          _showCategoryTypeScreen(context);
                         },
                       ),
                       Divider(
@@ -186,7 +186,7 @@ class EditMerchantScreen extends GetView<MerchantController> {
                       builder: (context) => ValidationMessageScreen(errorMessages: ["Name is required"]));
                   return;
                 }
-                _updateMerchant();
+                _updateCategory();
               },
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary, // set primary color
@@ -216,16 +216,16 @@ class EditMerchantScreen extends GetView<MerchantController> {
       isDismissible: false,
       builder: (context) => SingleTextInputScreen(
         title: 'Name',
-        hintText: 'Provide Merchant Name',
-        initialValue: merchant.name,
-        validator: (merchantName) async {
-          if (merchantName.isEmpty) {
-            return "Merchant name cannot be empty.";
+        hintText: 'Provide Category Name',
+        initialValue: category.name,
+        validator: (categoryName) async {
+          if (categoryName.isEmpty) {
+            return "Category name cannot be empty.";
           }
-          if (merchantName != merchant.name) {
-            final exists = await controller.isNameExists(merchantName);
+          if(categoryName != category.name) {
+            final exists = await controller.isNameExists(categoryName);
             if (exists) {
-              return "This merchant already exists.";
+              return "This category already exists.";
             }
           }
 
@@ -233,14 +233,14 @@ class EditMerchantScreen extends GetView<MerchantController> {
         },
 
         // ✅ Called only when valid
-        onValidSubmit: (merchantName) {
-          controller.name.value = merchantName;
+        onValidSubmit: (categoryName) {
+          controller.name.value = categoryName;
         },
       ),
     );
   }
 
-  void _showMerchantTypeScreen(BuildContext context) {
+  void _showCategoryTypeScreen(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -250,7 +250,7 @@ class EditMerchantScreen extends GetView<MerchantController> {
       builder: (context) => OptionSelectionScreen(
         onOptionSelected: (option) {
           controller.type.value = option;
-        }, options: [{'name': 'Expense'}, {'name': 'Income'}, {'name': 'Bills'}],
+        }, options: [{'name': 'Expense'}, {'name': 'Income'}],
       ),
     );
   }
@@ -267,8 +267,8 @@ class EditMerchantScreen extends GetView<MerchantController> {
       },),
     );
   }
-  _updateMerchant() async {
-    await controller.updateMerchant(id: merchant.id, fieldsToUpdate: ['name', 'type', 'icon']);
+  _updateCategory() async {
+    await controller.updateCategory(id: category.id, fieldsToUpdate: ['name', 'type', 'icon']);
     controller.reset();
     Get.back();
   }

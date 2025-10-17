@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:saving_diary/app/module/more/module/category/controller/category_controller.dart';
+import 'package:saving_diary/app/module/more/module/category/view/category_screen.dart';
 import 'package:saving_diary/app/module/more/module/general/view/general_screen.dart';
 import 'package:saving_diary/app/module/more/module/label/view/label_screen.dart';
 import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
@@ -85,6 +87,11 @@ class MoreScreen extends StatelessWidget {
                   ),
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+                    Get.to(() => CategoryListScreen(), binding: BindingsBuilder((){
+                      Get.lazyPut(() => CategoryController(), fenix: true);
+                    }));
+                  },
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),

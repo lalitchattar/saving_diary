@@ -1,25 +1,26 @@
-import 'package:saving_diary/app/data/model/merchant_model.dart';
+
+import 'package:saving_diary/app/data/model/category_model.dart';
 import '../../utils/app_logger.dart';
 import '../db/database_helper.dart';
 
-class MerchantRepository {
+class CategoryRepository {
   final dbHelper = DatabaseHelper();
 
-  Future<void> createMerchant(Merchant merchant) async {
+  Future<void> createCategory(Category category) async {
     try {
       final db = await dbHelper.database;
-      await db.insert('merchants', merchant.toMap());
+      await db.insert('categories', category.toMap());
     } catch (e, stack) {
-      appLogger.e('Error creating merchant: ${merchant.name}', error: e, stackTrace: stack);
+      appLogger.e('Error creating category: ${category.name}', error: e, stackTrace: stack);
     }
   }
 
-  Future<void> updateMerchant(Merchant merchant, {List<String>? fieldsToUpdate}) async {
+  Future<void> updateCategory(Category category, {List<String>? fieldsToUpdate}) async {
     try {
       final db = await dbHelper.database;
 
       // Convert entire model to map
-      final fullMap = merchant.toMap();
+      final fullMap = category.toMap();
 
       // If specific fields provided → filter only those
       final updateMap = fieldsToUpdate != null && fieldsToUpdate.isNotEmpty
@@ -28,114 +29,114 @@ class MerchantRepository {
       )
           : fullMap; // else, update all fields
       await db.update(
-        'merchants',
+        'categories',
         updateMap,
         where: 'id = ?',
-        whereArgs: [merchant.id],
+        whereArgs: [category.id],
       );
     } catch (e, stack) {
       appLogger.e(
-        'Error updating merchant id: ${merchant.id}',
+        'Error updating category id: ${category.id}',
         error: e,
         stackTrace: stack,
       );
     }
   }
 
-  Future<List<Merchant>> getAllMerchants() async {
+  Future<List<Category>> getAllCategories() async {
     try {
       final db = await dbHelper.database;
-      final maps = await db.query('merchants', where: 'is_deleted = ?', whereArgs: [0]);
-      return maps.map((map) => Merchant.fromMap(map)).toList();
+      final maps = await db.query('categories', where: 'is_deleted = ?', whereArgs: [0]);
+      return maps.map((map) => Category.fromMap(map)).toList();
     } catch (e, stack) {
-      appLogger.e('Error fetching all merchants', error: e, stackTrace: stack);
+      appLogger.e('Error fetching all categories', error: e, stackTrace: stack);
       return [];
     }
   }
 
-  Future<Merchant?> getMerchant(int id) async {
+  Future<Category?> getCategory(int id) async {
     try {
       final db = await dbHelper.database;
       final result = await db.query(
-        'merchants',
+        'categories',
         where: 'id = ?',
         whereArgs: [id],
         limit: 1,
       );
 
       if (result.isNotEmpty) {
-        return Merchant.fromMap(result.first);
+        return Category.fromMap(result.first);
       } else {
         return null;
       }
     } catch (e, stack) {
-      appLogger.e('Error activating merchants id: $id', error: e, stackTrace: stack);
+      appLogger.e('Error activating category id: $id', error: e, stackTrace: stack);
       return null;
     }
   }
 
-  Future<Merchant?> getMerchantByName(String name) async {
+  Future<Category?> getCategoryByName(String name) async {
     try {
       final db = await dbHelper.database;
       final result = await db.query(
-        'merchants',
+        'categories',
         where: 'name = ?',
         whereArgs: [name],
         limit: 1,
       );
 
       if (result.isNotEmpty) {
-        return Merchant.fromMap(result.first);
+        return Category.fromMap(result.first);
       } else {
         return null;
       }
     } catch (e, stack) {
-      appLogger.e('Error activating merchant id: $name', error: e, stackTrace: stack);
+      appLogger.e('Error activating category id: $name', error: e, stackTrace: stack);
       return null;
     }
   }
 
-  Future<int> deleteMerchant(int id) async {
+  Future<int> deleteCategory(int id) async {
     try {
       final db = await dbHelper.database;
       return await db.update(
-        'merchants',
+        'categories',
         {'is_deleted': 1},
         where: 'id = ?',
         whereArgs: [id],
       );
     } catch (e, stack) {
-      appLogger.e('Error activating merchant id: $id', error: e, stackTrace: stack);
+      appLogger.e('Error activating category id: $id', error: e, stackTrace: stack);
       return 0;
     }
   }
 
-  Future<int> inactivateMerchant(int id) async {
+  Future<int> deactivateCategory(int id) async {
     try {
       final db = await dbHelper.database;
       return await db.update(
-        'merchants',
+        'categories',
         {'is_active': 0},
         where: 'id = ?',
         whereArgs: [id],
       );
     } catch (e, stack) {
-      appLogger.e('Error deactivating merchant id: $id', error: e, stackTrace: stack);
+      appLogger.e('Error deactivating category id: $id', error: e, stackTrace: stack);
       return 0;
     }
   }
 
-  Future<int> activateMerchant(int id) async {
+  Future<int> activateCategory(int id) async {
     try {
       final db = await dbHelper.database;
       return await db.update(
-        'merchants',
+        'categories',
         {'is_active': 1},
         where: 'id = ?',
         whereArgs: [id],
       );
     } catch (e, stack) {
-      appLogger.e('Error activating merchant id: $id', error: e, stackTrace: stack);
+      appLogger.e('Error activating category id: $id', error: e, stackTrace: stack);
       return 0;
     }
   }

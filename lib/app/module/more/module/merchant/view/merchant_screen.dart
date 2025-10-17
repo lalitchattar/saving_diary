@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saving_diary/app/module/more/module/label/view/edit_label.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
 import 'package:saving_diary/app/module/more/module/merchant/view/add_merchant.dart';
 import 'package:saving_diary/app/module/more/module/merchant/view/edit_merchant.dart';
@@ -23,7 +23,7 @@ class MerchantListScreen extends GetView<MerchantController> {
               ? _buildLoader(context, colorScheme)
               : controller.merchants.isEmpty
               ? _buildEmptyState(context, colorScheme, textTheme)
-              : _buildLabelList(context, colorScheme, textTheme),
+              : _buildMerchantList(context, colorScheme, textTheme),
         ),
         floatingActionButton: controller.merchants.isNotEmpty
             ? FloatingActionButton.extended(
@@ -60,11 +60,7 @@ class MerchantListScreen extends GetView<MerchantController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.label_off_rounded,
-              size: 96,
-              color: colorScheme.outlineVariant,
-            ),
+            HugeIcon(icon: HugeIcons.strokeRoundedStore01, size: 100, color: Colors.grey,),
             const SizedBox(height: 24),
             Text(
               "No Merchants Yet",
@@ -104,7 +100,7 @@ class MerchantListScreen extends GetView<MerchantController> {
     );
   }
 
-  Widget _buildLabelList(
+  Widget _buildMerchantList(
     BuildContext context,
     ColorScheme colorScheme,
     TextTheme textTheme,

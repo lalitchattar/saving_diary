@@ -130,7 +130,7 @@ class AddMerchantScreen extends GetView<MerchantController> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 if (IconsSets.getIconByKey(controller.icon.value) != null)
-                                  IconsSets.iconsMap[controller.icon.value]!,
+                                  IconsSets.getIconByKey(controller.icon.value)!,
                                 const SizedBox(width: 6),
                                 const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                               ],
@@ -236,7 +236,7 @@ class AddMerchantScreen extends GetView<MerchantController> {
       builder: (context) => OptionSelectionScreen(
         onOptionSelected: (option) {
           controller.type.value = option;
-        }, options: [{'name': 'Expense'}, {'name': 'Income'}, {'name': 'Bills'}],
+        }, options: [{'name': 'Expense'}, {'name': 'Income'}],
       ),
     );
   }

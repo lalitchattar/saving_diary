@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/module/more/module/label/view/add_label.dart';
 import 'package:saving_diary/app/module/more/module/label/view/edit_label.dart';
 import 'package:saving_diary/app/utils/utility.dart';
@@ -60,11 +61,7 @@ class LabelListScreen extends GetView<LabelController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.label_off_rounded,
-              size: 96,
-              color: colorScheme.outlineVariant,
-            ),
+            HugeIcon(icon: HugeIcons.strokeRoundedLabel, size: 100, color: Colors.grey,),
             const SizedBox(height: 24),
             Text(
               "No Labels Yet",
@@ -144,11 +141,7 @@ class LabelListScreen extends GetView<LabelController> {
                       CircleAvatar(
                         radius: 24,
                         backgroundColor: getColorFromHex(label.color),
-                        child: const Icon(
-                          Icons.label_rounded,
-                          color: Colors.white,
-                          size: 22,
-                        ),
+                        child: HugeIcon(icon: HugeIcons.strokeRoundedLabel, size: 22,)
                       ),
                       if (label.isActive)
                         Positioned(

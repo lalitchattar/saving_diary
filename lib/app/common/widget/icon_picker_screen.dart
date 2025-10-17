@@ -45,7 +45,7 @@ class IconPickerScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "Select Merchant Icon",
+                        "Select Icon",
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
@@ -80,13 +80,13 @@ class IconPickerScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         itemCount: IconsSets.iconsMap.length,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 5,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+                          crossAxisCount: 6,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
                         ),
                         itemBuilder: (context, index) {
                           final name = IconsSets.iconsMap.keys.elementAt(index);
-                          final icon = IconsSets.iconsMap[name]!;
+                          final icon = IconsSets.getIconByKey(name)!;
 
                           return InkWell(
                             borderRadius: BorderRadius.circular(10),
@@ -105,7 +105,7 @@ class IconPickerScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(10),
                                   child: icon,
                                 ),
-                                const SizedBox(height: 6),
+                                /*const SizedBox(height: 6),
                                 Text(
                                   name,
                                   maxLines: 1,
@@ -115,7 +115,7 @@ class IconPickerScreen extends StatelessWidget {
                                     color: colorScheme.onSurfaceVariant,
                                     fontSize: 11,
                                   ),
-                                ),
+                                ),*/
                               ],
                             ),
                           );
