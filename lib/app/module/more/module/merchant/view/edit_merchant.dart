@@ -218,6 +218,7 @@ class EditMerchantScreen extends GetView<MerchantController> {
       builder: (context) => SingleTextInputScreen(
         title: 'Name',
         hintText: 'Provide Merchant Name',
+        initialValue: merchant.name,
         validator: (merchantName) async {
           if (merchantName.isEmpty) {
             return "Merchant name cannot be empty.";
