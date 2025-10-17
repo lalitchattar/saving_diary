@@ -37,13 +37,31 @@ class ValidationMessageScreen extends StatelessWidget {
                   ),
                 ),
 
-                // --- Header ---
-                Text(
-                  "Insufficient Data",
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
+                // --- Header with centered title and close icon ---
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Insufficient Data",
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        tooltip: "Close",
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
 

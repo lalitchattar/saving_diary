@@ -5,7 +5,7 @@ class ColorPickerScreen extends StatelessWidget {
 
   const ColorPickerScreen({super.key, required this.onColorSelected});
 
-  // Sample list of colors
+  // --- Softer, lighter color palette ---
   final List<Color> colors = const [
     Colors.red,
     Colors.pink,
@@ -29,7 +29,6 @@ class ColorPickerScreen extends StatelessWidget {
     Colors.black,
   ];
 
-  // Helper to get hex code from Color
   String colorToHex(Color color) =>
       '#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}';
 
@@ -37,7 +36,6 @@ class ColorPickerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-
     final maxHeight = MediaQuery.of(context).size.height * 0.7;
 
     return ConstrainedBox(
@@ -65,13 +63,31 @@ class ColorPickerScreen extends StatelessWidget {
                   ),
                 ),
 
-                // --- Header ---
-                Text(
-                  "Select Color",
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
+                // --- Header with centered title and close icon ---
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Select Color",
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        tooltip: "Close",
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
 
@@ -82,12 +98,13 @@ class ColorPickerScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 40, // maximum width of each box
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                      childAspectRatio: 1,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 44,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 1,
+                        ),
                     itemBuilder: (context, index) {
                       final color = colors[index];
                       return GestureDetector(
@@ -98,11 +115,12 @@ class ColorPickerScreen extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             color: color,
-                            shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(6),
                             border: Border.all(
-                              color: colorScheme.outline,
-                              width: 0.8,
+                              color: colorScheme.outlineVariant.withOpacity(
+                                0.6,
+                              ),
+                              width: 1,
                             ),
                           ),
                         ),
@@ -110,7 +128,6 @@ class ColorPickerScreen extends StatelessWidget {
                     },
                   ),
                 ),
-
 
                 const SizedBox(height: 20),
 

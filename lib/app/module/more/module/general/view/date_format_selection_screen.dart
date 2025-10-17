@@ -38,24 +38,44 @@ class DateFormatBottomSheet extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // --- Header ---
+              // --- Grab handle ---
               Container(
                 width: 40,
                 height: 4,
                 margin: const EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.6),
+                  color: colorScheme.outlineVariant.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              Text(
-                "Select Date Format",
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
+
+              // --- Header with centered title and X button ---
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "Select Date Format",
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      tooltip: "Close",
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 20),
 
               // --- Card with scrollable list ---
               Flexible(
@@ -65,7 +85,7 @@ class DateFormatBottomSheet extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                     side: BorderSide(
-                      color: colorScheme.outline.withValues(alpha: 0.8),
+                      color: colorScheme.outline.withOpacity(0.8),
                       width: 0.5,
                     ),
                   ),
@@ -77,8 +97,7 @@ class DateFormatBottomSheet extends StatelessWidget {
                       physics: const BouncingScrollPhysics(),
                       itemCount: formats.length,
                       separatorBuilder: (_, __) => Divider(
-                        color:
-                        colorScheme.outlineVariant.withValues(alpha: 0.8),
+                        color: colorScheme.outlineVariant.withOpacity(0.8),
                         height: 1,
                       ),
                       itemBuilder: (context, index) {

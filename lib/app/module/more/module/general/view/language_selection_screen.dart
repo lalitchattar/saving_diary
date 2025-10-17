@@ -39,7 +39,7 @@ class LocaleSelectionBottomSheet extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // --- Header ---
+                // --- Grab handle ---
                 Container(
                   width: 40,
                   height: 4,
@@ -49,14 +49,34 @@ class LocaleSelectionBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-                Text(
-                  "Select Language",
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
+
+                // --- Header with centered title and X button ---
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Select Language",
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        tooltip: "Close",
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
 
                 // --- Scrollable List ---
                 Flexible(

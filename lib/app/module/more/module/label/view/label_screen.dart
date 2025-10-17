@@ -7,35 +7,53 @@ import 'package:saving_diary/app/utils/utility.dart';
 import '../controller/label_controller.dart';
 
 class LabelListScreen extends GetView<LabelController> {
-
-  const LabelListScreen({
-    super.key
-  });
+  const LabelListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Obx(() => Scaffold(
-      appBar: AppBar(title: Text("Labels"), centerTitle: true),
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: controller.labels.isEmpty
-            ? _buildEmptyState(context, colorScheme, textTheme)
-            : _buildLabelList(context, colorScheme, textTheme),
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(title: Text("Labels"), centerTitle: true),
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: controller.isLoading.value
+              ? _buildLoader(context, colorScheme)
+              : controller.labels.isEmpty
+              ? _buildEmptyState(context, colorScheme, textTheme)
+              : _buildLabelList(context, colorScheme, textTheme),
+        ),
+        floatingActionButton: controller.labels.isNotEmpty
+            ? FloatingActionButton.extended(
+                icon: const Icon(Icons.add),
+                label: const Text("Add Label"),
+                onPressed: () {
+                  controller.reset();
+                  Get.to(() => AddLabelScreen());
+                },
+              )
+            : null,
       ),
-      floatingActionButton: controller.labels.isNotEmpty ? FloatingActionButton.extended(
-        icon: const Icon(Icons.add),
-        label: const Text("Add Label"),
-        onPressed: () { Get.to(() => AddLabelScreen()); },
-      ) : null,
-    ));
+    );
+  }
+
+  Widget _buildLoader(BuildContext context, ColorScheme colorScheme) {
+    return Center(
+      child: CircularProgressIndicator(
+        color: colorScheme.primary,
+        strokeWidth: 3,
+      ),
+    );
   }
 
   /// --- Empty State View ---
   Widget _buildEmptyState(
-      BuildContext context, ColorScheme colorScheme, TextTheme textTheme) {
+    BuildContext context,
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -51,8 +69,8 @@ class LabelListScreen extends GetView<LabelController> {
             Text(
               "No Labels Yet",
               style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: colorScheme.onSurface
+                fontWeight: FontWeight.w400,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
@@ -61,18 +79,22 @@ class LabelListScreen extends GetView<LabelController> {
               textAlign: TextAlign.center,
               style: textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w400,
-                color: colorScheme.onSurface
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 24),
             FilledButton.icon(
               onPressed: () {
+                controller.reset();
                 Get.to(() => AddLabelScreen());
               },
               icon: const Icon(Icons.add),
               label: const Text("Add Label"),
               style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 14,
+                ),
                 textStyle: const TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
@@ -82,7 +104,11 @@ class LabelListScreen extends GetView<LabelController> {
     );
   }
 
-  Widget _buildLabelList(BuildContext context, ColorScheme colorScheme, TextTheme textTheme) {
+  Widget _buildLabelList(
+    BuildContext context,
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       itemCount: controller.labels.length,
@@ -118,8 +144,11 @@ class LabelListScreen extends GetView<LabelController> {
                       CircleAvatar(
                         radius: 24,
                         backgroundColor: getColorFromHex(label.color),
-                        child: const Icon(Icons.label_rounded,
-                            color: Colors.white, size: 22),
+                        child: const Icon(
+                          Icons.label_rounded,
+                          color: Colors.white,
+                          size: 22,
+                        ),
                       ),
                       if (label.isActive)
                         Positioned(
@@ -179,7 +208,9 @@ class LabelListScreen extends GetView<LabelController> {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: colorScheme.secondaryContainer,
                           borderRadius: BorderRadius.circular(14),
@@ -213,4 +244,3 @@ class LabelListScreen extends GetView<LabelController> {
     );
   }
 }
-

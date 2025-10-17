@@ -150,6 +150,9 @@ class EditLabelScreen extends GetView<LabelController> {
               ),
             ),
           ),
+          SizedBox(
+            height: 30.0,
+          )
         ],
       ),
     );

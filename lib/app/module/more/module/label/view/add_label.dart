@@ -149,6 +149,9 @@ class AddLabelScreen extends GetView<LabelController> {
               ),
             ),
           ),
+          SizedBox(
+            height: 30.0,
+          )
         ],
       ),
     );

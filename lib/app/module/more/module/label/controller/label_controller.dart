@@ -8,6 +8,7 @@ class LabelController extends GetxController {
   var labels  = <Label>[].obs;
   var name = ''.obs;
   var color = '#FF009688'.obs;
+  var isLoading = false.obs;
 
   final repository = LabelRepository();
 
@@ -25,8 +26,14 @@ class LabelController extends GetxController {
 
 
   Future<void> getAllLabels() async {
-    final result = await repository.getAllLabels();
-    labels.assignAll(result);
+    isLoading.value = true;
+    try{
+      final result = await repository.getAllLabels();
+      labels.assignAll(result);
+    } finally {
+      isLoading.value = false;
+    }
+
   }
 
   Future<void> createLabel() async {
