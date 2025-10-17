@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:saving_diary/app/module/more/module/general/view/general_screen.dart';
 import 'package:saving_diary/app/module/more/module/label/view/label_screen.dart';
+import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
+import 'package:saving_diary/app/module/more/module/merchant/view/merchant_screen.dart';
 
 import '../module/label/controller/label_controller.dart';
 class MoreScreen extends StatelessWidget {
@@ -104,6 +106,11 @@ class MoreScreen extends StatelessWidget {
                   ),
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+                    Get.to(() => MerchantListScreen(), binding: BindingsBuilder((){
+                      Get.lazyPut(() => MerchantController(), fenix: true);
+                    }));
+                  },
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class FirstDayOfWeekBottomSheet extends StatelessWidget {
+class FirstDayOfWeekSelectionScreen extends StatelessWidget {
   final Function(String) onDaySelected;
 
-  const FirstDayOfWeekBottomSheet({super.key, required this.onDaySelected});
+  const FirstDayOfWeekSelectionScreen({super.key, required this.onDaySelected});
 
   @override
   Widget build(BuildContext context) {

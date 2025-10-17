@@ -1,0 +1,272 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:saving_diary/app/common/widget/text_box_screen.dart';
+import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
+import '../../../../../common/widget/icon_picker_screen.dart';
+import '../../../../../common/widget/option_selection_screen.dart';
+import '../../../../../common/widget/validation_message_screen.dart';
+import '../../../../../data/model/merchant_model.dart';
+import '../../../../../utils/huge_icon_sets.dart';
+import '../../../../../utils/utility.dart';
+
+class EditMerchantScreen extends GetView<MerchantController> {
+  EditMerchantScreen({super.key});
+
+  final Merchant merchant = Get.arguments;
+
+  void _initializeController() {
+    if (controller.name.value.isEmpty) {
+      controller.name.value = merchant.name;
+      controller.type.value = merchant.type;
+      controller.icon.value = merchant.icon!;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    _initializeController();
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Update Merchant"), centerTitle: true),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              children: [
+                // ... your existing Card and ListTiles remain unchanged
+                Card(
+                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(
+                      color: colorScheme.outline.withOpacity(0.8),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                          leading: const HugeIcon(icon: HugeIcons.strokeRoundedCursorText),
+                          trailing: Obx(
+                                () => Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  controller.name.value == ''
+                                      ? 'Required'
+                                      : controller.name.value,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: controller.name.value == '' ? colorScheme.error : colorScheme.onSurface,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                              ],
+                            ),
+                          ),
+                          title: Text(
+                            "Name",
+                            style: textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: colorScheme.onSurface,
+                              letterSpacing: 0.15,
+                            ),
+                          ),
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: -2),
+                          onTap: () {
+                            _showNameTextBoxScreen(context);
+                          },
+                        ),
+                      ),
+                      Divider(
+                        color: colorScheme.outlineVariant.withOpacity(0.8),
+                      ),
+                      ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        leading: const HugeIcon(icon: HugeIcons.strokeRoundedShapeCollection),
+                        trailing: Obx(
+                              () => Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                controller.type.value == ''
+                                    ? 'Required'
+                                    : controller.type.value,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: controller.type.value == '' ? colorScheme.error : colorScheme.onSurface,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                            ],
+                          ),
+                        ),
+                        title: Text(
+                          "Type",
+                          style: textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: colorScheme.onSurface,
+                            letterSpacing: 0.15,
+                          ),
+                        ),
+                        dense: true,
+                        visualDensity: const VisualDensity(vertical: -2),
+                        onTap: () {
+                          _showMerchantTypeScreen(context);
+                        },
+                      ),
+                      Divider(
+                        color: colorScheme.outlineVariant.withOpacity(0.8),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 0,
+                          ),
+                          leading: HugeIcon(icon: HugeIcons.strokeRoundedAiImage),
+                          trailing: Obx(
+                                () => Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (IconsSets.getIconByKey(controller.icon.value) != null)
+                                  IconsSets.iconsMap[controller.icon.value]!,
+                                const SizedBox(width: 6),
+                                const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                              ],
+                            ),
+                          ),
+                          title: Text(
+                            "Icon",
+                            style: textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: colorScheme.onSurface,
+                              letterSpacing: 0.15,
+                            ),
+                          ),
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: -2),
+                          onTap: () {
+                            _showIconPickerScreen(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // --- FilledButton added at the bottom ---
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: FilledButton.tonalIcon(
+              icon: const Icon(Icons.save_rounded),
+              label: const Text("Update"),
+              onPressed: () {
+                if(controller.name.value == '') {
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      enableDrag: false,
+                      isDismissible: false,
+                      builder: (context) => ValidationMessageScreen(errorMessages: ["Name is required"]));
+                  return;
+                }
+                _updateMerchant();
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary, // set primary color
+                foregroundColor: Colors.white, // text/icon color
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                textStyle: textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+                minimumSize: const Size.fromHeight(50),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 30.0,
+          )
+        ],
+      ),
+    );
+  }
+
+  _showNameTextBoxScreen(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => SingleTextInputScreen(
+        title: 'Name',
+        hintText: 'Provide Merchant Name',
+        validator: (merchantName) async {
+          if (merchantName.isEmpty) {
+            return "Merchant name cannot be empty.";
+          }
+          final exists = await controller.isNameExists(merchantName);
+          if (exists) {
+            return "This merchant already exists.";
+          }
+          return null; // valid
+        },
+
+        // ✅ Called only when valid
+        onValidSubmit: (merchantName) {
+          controller.name.value = merchantName;
+        },
+      ),
+    );
+  }
+
+  void _showMerchantTypeScreen(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => OptionSelectionScreen(
+        onOptionSelected: (option) {
+          controller.type.value = option;
+        }, options: [{'name': 'Expense'}, {'name': 'Income'}, {'name': 'Bills'}],
+      ),
+    );
+  }
+
+  void _showIconPickerScreen(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => IconPickerScreen(onIconSelected: (String iconName) {
+        controller.icon.value = iconName;
+      },),
+    );
+  }
+  _updateMerchant() async {
+    await controller.updateMerchant(id: merchant.id, fieldsToUpdate: ['name', 'type', 'icon']);
+    controller.reset();
+    Get.back();
+  }
+}

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DateFormatBottomSheet extends StatelessWidget {
+class DateFormatSelectionScreen extends StatelessWidget {
   final Function(String) onFormatSelected;
 
-  const DateFormatBottomSheet({super.key, required this.onFormatSelected});
+  const DateFormatSelectionScreen({super.key, required this.onFormatSelected});
 
   @override
   Widget build(BuildContext context) {

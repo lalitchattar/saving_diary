@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class NumberFormatBottomSheet extends StatelessWidget {
+class NumberFormatSelectionScreen extends StatelessWidget {
   final Function(String) onFormatSelected;
   final double sampleNumber;
 
-  const NumberFormatBottomSheet({
+  const NumberFormatSelectionScreen({
     super.key,
     required this.onFormatSelected,
     this.sampleNumber = 1234567.89,

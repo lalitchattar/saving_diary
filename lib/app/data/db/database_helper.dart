@@ -18,16 +18,14 @@ class DatabaseHelper {
     final path = join(await getDatabasesPath(), 'saving_diary.db');
     return await openDatabase(
       path,
-      version: 2, // Increment version if adding new table
+      version: 1, // Increment version if adding new table
       onCreate: (db, version) async {
         // Settings table already exists in old version; we create anyway for new installs
         await _createSettingsTable(db);
         await _createLabelTable(db);
+        await _createMerchantTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) {
-          await _createLabelTable(db);
-        }
         // Future upgrades can be handled here
       },
     );
@@ -48,6 +46,22 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         color TEXT NOT NULL,         
+        is_active INTEGER DEFAULT 1,
+        is_deleted INTEGER DEFAULT 0,
+        transaction_count INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT
+      )
+    ''');
+  }
+
+  Future<void> _createMerchantTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS merchants (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        type TEXT NOT NULL, 
+        icon TEXT NOT NULL,        
         is_active INTEGER DEFAULT 1,
         is_deleted INTEGER DEFAULT 0,
         transaction_count INTEGER DEFAULT 0,

@@ -22,11 +22,9 @@ class EditLabelScreen extends GetView<LabelController> {
 
   @override
   Widget build(BuildContext context) {
-
     _initializeController();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-
 
     return Scaffold(
       appBar: AppBar(title: const Text("Update Label"), centerTitle: true),
@@ -38,7 +36,10 @@ class EditLabelScreen extends GetView<LabelController> {
               children: [
                 // ... your existing Card and ListTiles remain unchanged
                 Card(
-                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 0,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                     side: BorderSide(
@@ -51,10 +52,14 @@ class EditLabelScreen extends GetView<LabelController> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                          leading: const HugeIcon(icon: HugeIcons.strokeRoundedCursorText),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                          ),
+                          leading: const HugeIcon(
+                            icon: HugeIcons.strokeRoundedCursorText,
+                          ),
                           trailing: Obx(
-                                () => Row(
+                            () => Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
@@ -62,12 +67,16 @@ class EditLabelScreen extends GetView<LabelController> {
                                       ? 'Required'
                                       : controller.name.value,
                                   style: textTheme.bodyMedium?.copyWith(
-                                    color: controller.name.value == '' ? colorScheme.error : colorScheme.onSurface,
+                                    color: controller.name.value == ''
+                                        ? colorScheme.error
+                                        : colorScheme.onSurface,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
                                 const SizedBox(width: 6),
-                                const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                                const HugeIcon(
+                                  icon: HugeIcons.strokeRoundedArrowRight01,
+                                ),
                               ],
                             ),
                           ),
@@ -89,25 +98,35 @@ class EditLabelScreen extends GetView<LabelController> {
                       Divider(
                         color: colorScheme.outlineVariant.withOpacity(0.8),
                       ),
-                      Obx(() => Padding(
+                      Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                          leading: const HugeIcon(icon: HugeIcons.strokeRoundedColors),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  color: getColorFromHex(controller.color.value),
-                                  shape: BoxShape.circle,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                          ),
+                          leading: const HugeIcon(
+                            icon: HugeIcons.strokeRoundedColors,
+                          ),
+                          trailing: Obx(
+                            () => Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: getColorFromHex(
+                                      controller.color.value,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 6),
-                              const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
-                            ],
+                                const SizedBox(width: 6),
+                                const HugeIcon(
+                                  icon: HugeIcons.strokeRoundedArrowRight01,
+                                ),
+                              ],
+                            ),
                           ),
                           title: Text(
                             "Color",
@@ -123,7 +142,7 @@ class EditLabelScreen extends GetView<LabelController> {
                             _showColorPicker(context);
                           },
                         ),
-                      )),
+                      ),
                     ],
                   ),
                 ),
@@ -140,7 +159,9 @@ class EditLabelScreen extends GetView<LabelController> {
                 _updateLabel();
               },
               style: FilledButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.primary, // set primary color
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.primary, // set primary color
                 foregroundColor: Colors.white, // text/icon color
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 textStyle: textTheme.labelLarge?.copyWith(
@@ -150,9 +171,7 @@ class EditLabelScreen extends GetView<LabelController> {
               ),
             ),
           ),
-          SizedBox(
-            height: 30.0,
-          )
+          SizedBox(height: 30.0),
         ],
       ),
     );
@@ -160,15 +179,17 @@ class EditLabelScreen extends GetView<LabelController> {
 
   _showColorPicker(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        enableDrag: false,
-        isDismissible: false,
-        builder: (context) => ColorPickerScreen(onColorSelected: (colorHexCode) {
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => ColorPickerScreen(
+        onColorSelected: (colorHexCode) {
           controller.color.value = colorHexCode;
           label.color = colorHexCode;
-        })
+        },
+      ),
     );
   }
 
@@ -187,7 +208,7 @@ class EditLabelScreen extends GetView<LabelController> {
           if (labelName.isEmpty) {
             return "Label name cannot be empty.";
           }
-          if(labelName != label.name) {
+          if (labelName != label.name) {
             final exists = await controller.isNameExists(labelName);
             if (exists) {
               return "This label already exists.";
@@ -205,7 +226,10 @@ class EditLabelScreen extends GetView<LabelController> {
   }
 
   _updateLabel() async {
-    await controller.updateLabel(id: label.id);
+    await controller.updateLabel(
+      id: label.id,
+      fieldsToUpdate: ['name', 'color'],
+    );
     controller.reset();
     Get.back();
   }

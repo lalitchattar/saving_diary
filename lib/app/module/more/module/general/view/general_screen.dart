@@ -301,7 +301,7 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
       backgroundColor: Colors.transparent,
       builder: (context) => SizedBox(
         height: height,
-        child: CurrencyBottomSheet(
+        child: CurrencySelectionScreen(
           onCurrencySelected: (symbol, country) {
             controller.updateSetting("currency", symbol);
             controller.updateSetting("currencyCountryName", country);
@@ -322,7 +322,7 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
       backgroundColor: Colors.transparent, // transparent to allow rounded corners
       builder: (context) => SizedBox(
         height: height,
-        child: DateFormatBottomSheet(
+        child: DateFormatSelectionScreen(
           onFormatSelected: (format) {
             controller.updateSetting("dateFormat", format);
           },
@@ -341,7 +341,7 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
       backgroundColor: Colors.transparent,
       builder: (context) => SizedBox(
         height: height,
-        child: NumberFormatBottomSheet(
+        child: NumberFormatSelectionScreen(
           onFormatSelected: (format) {
             controller.updateSetting("decimalFormat", format);
           },
@@ -361,7 +361,7 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
       backgroundColor: Colors.transparent,
       builder: (context) => SizedBox(
         height: height,
-        child: LocaleSelectionBottomSheet(
+        child: LocaleSelectionScreen(
           onLocaleSelected: (locale, nativeName) {
             controller.updateSetting("language", nativeName);
             controller.updateSetting("languageCode", locale.languageCode);
@@ -383,7 +383,7 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
       backgroundColor: Colors.transparent,
       builder: (context) => SizedBox(
         height: height,
-        child: FirstDayOfWeekBottomSheet(
+        child: FirstDayOfWeekSelectionScreen(
           onDaySelected: (day) {
             controller.updateSetting("firstDayOfWeek", day);
           },
@@ -399,7 +399,7 @@ class GeneralScreen extends GetView<GeneralSettingsController> {
       backgroundColor: Colors.transparent,
       enableDrag: false,
       isDismissible: false,
-      builder: (context) => ThemeSelectionBottomSheet(
+      builder: (context) => ThemeSelectionScreen(
         onThemeSelected: (theme) {
           controller.updateSetting("theme", theme);
         },

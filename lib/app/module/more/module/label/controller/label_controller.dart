@@ -46,14 +46,14 @@ class LabelController extends GetxController {
     }
   }
 
-  Future<void> updateLabel({int? id}) async {
+  Future<void> updateLabel({int? id, List<String>? fieldsToUpdate}) async {
     try{
       final label = Label(
         id: id,
         name: name.value,
         color: color.value
       );
-      await repository.updateLabel(label, fieldsToUpdate: ['name', 'color']);
+      await repository.updateLabel(label, fieldsToUpdate: fieldsToUpdate);
       await getAllLabels();
     } catch (e, stack) {
       appLogger.e('Error updating label id: $id', error: e, stackTrace: stack);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CurrencyBottomSheet extends StatelessWidget {
+class CurrencySelectionScreen extends StatelessWidget {
   final Function(String, String) onCurrencySelected;
 
-  const CurrencyBottomSheet({super.key, required this.onCurrencySelected});
+  const CurrencySelectionScreen({super.key, required this.onCurrencySelected});
 
   @override
   Widget build(BuildContext context) {

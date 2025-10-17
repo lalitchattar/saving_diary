@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ThemeSelectionScreen extends StatelessWidget {
-  final Function(String) onThemeSelected;
+class OptionSelectionScreen extends StatelessWidget {
+  final List<Map<String, String>> options;
+  final Function(String) onOptionSelected;
 
-  const ThemeSelectionScreen({super.key, required this.onThemeSelected});
+  const OptionSelectionScreen({super.key, required this.onOptionSelected, required this.options});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-
-    final themes = [
-      {'name': 'System'},
-      {'name': 'Light'},
-      {'name': 'Dark'},
-    ];
 
     final maxHeight = MediaQuery.of(context).size.height * 0.7;
 
@@ -89,17 +84,17 @@ class ThemeSelectionScreen extends StatelessWidget {
                       child: ListView.separated(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
-                        itemCount: themes.length,
+                        itemCount: options.length,
                         separatorBuilder: (_, __) => Divider(
                           color: colorScheme.outlineVariant.withOpacity(0.8),
                           height: 1,
                         ),
                         itemBuilder: (context, index) {
-                          final theme = themes[index];
+                          final option = options[index];
                           return ListTile(
                             title: Center(
                               child: Text(
-                                theme['name'] as String,
+                                option['name'] as String,
                                 style: textTheme.bodyLarge?.copyWith(
                                   color: colorScheme.onSurface,
                                   letterSpacing: 0.1,
@@ -108,7 +103,7 @@ class ThemeSelectionScreen extends StatelessWidget {
                             ),
                             onTap: () {
                               Navigator.pop(context);
-                              onThemeSelected(theme['name'] as String);
+                              onOptionSelected(option['name'] as String);
                             },
                           );
                         },

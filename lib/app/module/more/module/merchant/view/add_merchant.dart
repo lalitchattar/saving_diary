@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:saving_diary/app/common/widget/color_picker_screen.dart';
+import 'package:saving_diary/app/common/widget/icon_picker_screen.dart';
+import 'package:saving_diary/app/common/widget/option_selection_screen.dart';
 import 'package:saving_diary/app/common/widget/text_box_screen.dart';
 import 'package:saving_diary/app/common/widget/validation_message_screen.dart';
-import '../../../../../utils/utility.dart';
-import '../controller/label_controller.dart';
+import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
+import 'package:saving_diary/app/utils/huge_icon_sets.dart';
 
-class AddLabelScreen extends GetView<LabelController> {
-  const AddLabelScreen({super.key});
+class AddMerchantScreen extends GetView<MerchantController> {
+  const AddMerchantScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Label"), centerTitle: true),
+      appBar: AppBar(title: const Text("Add Merchant"), centerTitle: true),
       body: Column(
         children: [
           Expanded(
@@ -25,10 +28,7 @@ class AddLabelScreen extends GetView<LabelController> {
               children: [
                 // ... your existing Card and ListTiles remain unchanged
                 Card(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 0,
-                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                     side: BorderSide(
@@ -41,14 +41,10 @@ class AddLabelScreen extends GetView<LabelController> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                          ),
-                          leading: const HugeIcon(
-                            icon: HugeIcons.strokeRoundedCursorText,
-                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                          leading: const HugeIcon(icon: HugeIcons.strokeRoundedCursorText),
                           trailing: Obx(
-                            () => Row(
+                                () => Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
@@ -56,16 +52,12 @@ class AddLabelScreen extends GetView<LabelController> {
                                       ? 'Required'
                                       : controller.name.value,
                                   style: textTheme.bodyMedium?.copyWith(
-                                    color: controller.name.value == ''
-                                        ? colorScheme.error
-                                        : colorScheme.onSurface,
+                                    color: controller.name.value == '' ? colorScheme.error : colorScheme.onSurface,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
                                 const SizedBox(width: 6),
-                                const HugeIcon(
-                                  icon: HugeIcons.strokeRoundedArrowRight01,
-                                ),
+                                const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                               ],
                             ),
                           ),
@@ -87,38 +79,65 @@ class AddLabelScreen extends GetView<LabelController> {
                       Divider(
                         color: colorScheme.outlineVariant.withOpacity(0.8),
                       ),
+                      ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        leading: const HugeIcon(icon: HugeIcons.strokeRoundedShapeCollection),
+                        trailing: Obx(
+                              () => Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                controller.type.value == ''
+                                    ? 'Required'
+                                    : controller.type.value,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: controller.type.value == '' ? colorScheme.error : colorScheme.onSurface,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                            ],
+                          ),
+                        ),
+                        title: Text(
+                          "Type",
+                          style: textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: colorScheme.onSurface,
+                            letterSpacing: 0.15,
+                          ),
+                        ),
+                        dense: true,
+                        visualDensity: const VisualDensity(vertical: -2),
+                        onTap: () {
+                          _showMerchantTypeScreen(context);
+                        },
+                      ),
+                      Divider(
+                        color: colorScheme.outlineVariant.withOpacity(0.8),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 20,
+                            vertical: 0,
                           ),
-                          leading: const HugeIcon(
-                            icon: HugeIcons.strokeRoundedColors,
-                          ),
+                          leading: HugeIcon(icon: HugeIcons.strokeRoundedAiImage),
                           trailing: Obx(
-                            () => Row(
+                                () => Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: getColorFromHex(
-                                      controller.color.value,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
+                                if (IconsSets.getIconByKey(controller.icon.value) != null)
+                                  IconsSets.iconsMap[controller.icon.value]!,
                                 const SizedBox(width: 6),
-                                const HugeIcon(
-                                  icon: HugeIcons.strokeRoundedArrowRight01,
-                                ),
+                                const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                               ],
                             ),
                           ),
                           title: Text(
-                            "Color",
+                            "Icon",
                             style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.w400,
                               color: colorScheme.onSurface,
@@ -128,7 +147,7 @@ class AddLabelScreen extends GetView<LabelController> {
                           dense: true,
                           visualDensity: const VisualDensity(vertical: -2),
                           onTap: () {
-                            _showColorPicker(context);
+                            _showIconPickerScreen(context);
                           },
                         ),
                       ),
@@ -145,25 +164,20 @@ class AddLabelScreen extends GetView<LabelController> {
               icon: const Icon(Icons.save_rounded),
               label: const Text("Save"),
               onPressed: () {
-                if (controller.name.value == '') {
+                if(controller.name.value == '') {
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
                     enableDrag: false,
                     isDismissible: false,
-                    builder: (context) => ValidationMessageScreen(
-                      errorMessages: ["Name is required"],
-                    ),
-                  );
+                    builder: (context) => ValidationMessageScreen(errorMessages: ["Name is required"]));
                   return;
                 }
-                _saveLabel();
+                _saveMerchant();
               },
               style: FilledButton.styleFrom(
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.primary, // set primary color
+                backgroundColor: Theme.of(context).colorScheme.primary, // set primary color
                 foregroundColor: Colors.white, // text/icon color
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 textStyle: textTheme.labelLarge?.copyWith(
@@ -173,26 +187,15 @@ class AddLabelScreen extends GetView<LabelController> {
               ),
             ),
           ),
-          SizedBox(height: 30.0),
+          SizedBox(
+            height: 30.0,
+          )
         ],
       ),
     );
   }
 
-  _showColorPicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      enableDrag: false,
-      isDismissible: false,
-      builder: (context) => ColorPickerScreen(
-        onColorSelected: (colorHexCode) {
-          controller.color.value = colorHexCode;
-        },
-      ),
-    );
-  }
+
 
   _showNameTextBoxScreen(BuildContext context) {
     showModalBottomSheet(
@@ -203,29 +206,58 @@ class AddLabelScreen extends GetView<LabelController> {
       isDismissible: false,
       builder: (context) => SingleTextInputScreen(
         title: 'Name',
-        hintText: 'Provide Label Name',
-        validator: (labelName) async {
-          if (labelName.isEmpty) {
-            return "Label name cannot be empty.";
+        hintText: 'Provide Merchant Name',
+        validator: (merchantName) async {
+          if (merchantName.isEmpty) {
+            return "Merchant name cannot be empty.";
           }
-          final exists = await controller.isNameExists(labelName);
+          final exists = await controller.isNameExists(merchantName);
           if (exists) {
-            return "This label already exists.";
+            return "This merchant already exists.";
           }
           return null; // valid
         },
 
         // ✅ Called only when valid
-        onValidSubmit: (labelName) {
-          controller.name.value = labelName;
+        onValidSubmit: (merchantName) {
+          controller.name.value = merchantName;
         },
       ),
     );
   }
 
-  _saveLabel() async {
-    await controller.createLabel();
+  void _showMerchantTypeScreen(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => OptionSelectionScreen(
+        onOptionSelected: (option) {
+          controller.type.value = option;
+        }, options: [{'name': 'Expense'}, {'name': 'Income'}, {'name': 'Bills'}],
+      ),
+    );
+  }
+
+  void _showIconPickerScreen(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) => IconPickerScreen(onIconSelected: (String iconName) {
+        controller.icon.value = iconName;
+      },),
+    );
+  }
+
+  _saveMerchant() async {
+    await controller.createMerchant();
     controller.reset();
     Get.back();
   }
+
 }

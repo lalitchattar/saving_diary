@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LocaleSelectionBottomSheet extends StatelessWidget {
+class LocaleSelectionScreen extends StatelessWidget {
   final Function(Locale, String) onLocaleSelected;
 
-  const LocaleSelectionBottomSheet({super.key, required this.onLocaleSelected});
+  const LocaleSelectionScreen({super.key, required this.onLocaleSelected});
 
   @override
   Widget build(BuildContext context) {

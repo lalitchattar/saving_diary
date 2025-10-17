@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:saving_diary/app/utils/huge_icon_sets.dart';
 
-class ThemeSelectionScreen extends StatelessWidget {
-  final Function(String) onThemeSelected;
+class IconPickerScreen extends StatelessWidget {
+  final Function(String) onIconSelected;
 
-  const ThemeSelectionScreen({super.key, required this.onThemeSelected});
+  const IconPickerScreen({super.key, required this.onIconSelected});
+
+  // Fast lookup map of icons
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-
-    final themes = [
-      {'name': 'System'},
-      {'name': 'Light'},
-      {'name': 'Dark'},
-    ];
-
     final maxHeight = MediaQuery.of(context).size.height * 0.7;
 
     return ConstrainedBox(
@@ -43,13 +39,13 @@ class ThemeSelectionScreen extends StatelessWidget {
                   ),
                 ),
 
-                // --- Header with centered title and X button ---
+                // --- Header ---
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     Center(
                       child: Text(
-                        "Select Theme",
+                        "Select Merchant Icon",
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
@@ -59,11 +55,7 @@ class ThemeSelectionScreen extends StatelessWidget {
                     Positioned(
                       right: 0,
                       child: IconButton(
-                        icon: Icon(
-                          Icons.close_rounded,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        tooltip: "Close",
+                        icon: Icon(Icons.close_rounded, color: colorScheme.onSurfaceVariant),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
@@ -71,45 +63,61 @@ class ThemeSelectionScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // --- Scrollable Card List ---
+                // --- Grid of icons ---
                 Flexible(
                   child: Card(
                     elevation: 0,
                     margin: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                        color: colorScheme.outline.withOpacity(0.8),
-                        width: 0.5,
-                      ),
+                      side: BorderSide(color: colorScheme.outline.withOpacity(0.8), width: 0.5),
                     ),
                     child: Scrollbar(
                       thumbVisibility: true,
                       radius: const Radius.circular(8),
-                      child: ListView.separated(
-                        shrinkWrap: true,
+                      child: GridView.builder(
+                        padding: const EdgeInsets.all(10),
                         physics: const BouncingScrollPhysics(),
-                        itemCount: themes.length,
-                        separatorBuilder: (_, __) => Divider(
-                          color: colorScheme.outlineVariant.withOpacity(0.8),
-                          height: 1,
+                        itemCount: IconsSets.iconsMap.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 5,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
                         ),
                         itemBuilder: (context, index) {
-                          final theme = themes[index];
-                          return ListTile(
-                            title: Center(
-                              child: Text(
-                                theme['name'] as String,
-                                style: textTheme.bodyLarge?.copyWith(
-                                  color: colorScheme.onSurface,
-                                  letterSpacing: 0.1,
-                                ),
-                              ),
-                            ),
+                          final name = IconsSets.iconsMap.keys.elementAt(index);
+                          final icon = IconsSets.iconsMap[name]!;
+
+                          return InkWell(
+                            borderRadius: BorderRadius.circular(10),
                             onTap: () {
                               Navigator.pop(context);
-                              onThemeSelected(theme['name'] as String);
+                              onIconSelected(name);
                             },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: colorScheme.surface.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: icon,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         },
                       ),
@@ -127,9 +135,7 @@ class ThemeSelectionScreen extends StatelessWidget {
                     onPressed: () => Navigator.pop(context),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      textStyle: textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                      textStyle: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
