@@ -166,10 +166,49 @@ class CategoryListScreen extends GetView<CategoryController> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundColor: colorScheme.primaryContainer.withOpacity(0.3),
-                    child: IconsSets.getIconByKey(category.icon!),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: colorScheme.primaryContainer.withOpacity(0.3),
+                        child: IconsSets.getIconByKey(category.icon!),
+                      ),
+                      if (category.isActive)
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.greenAccent,
+                              border: Border.all(
+                                color: colorScheme.surface,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.redAccent,
+                              border: Border.all(
+                                color: colorScheme.surface,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                   const SizedBox(width: 16),
                   Expanded(
