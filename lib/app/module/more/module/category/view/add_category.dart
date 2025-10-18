@@ -52,8 +52,8 @@ class AddCategoryScreen extends GetView<CategoryController> {
                                       ? 'Required'
                                       : controller.name.value,
                                   style: textTheme.bodyMedium?.copyWith(
-                                    color: controller.name.value == '' ? colorScheme.error : colorScheme.onSurface,
-                                    fontWeight: FontWeight.w400,
+                                    color: controller.name.value == '' ? colorScheme.error : colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 const SizedBox(width: 6),
@@ -91,8 +91,8 @@ class AddCategoryScreen extends GetView<CategoryController> {
                                     ? 'Required'
                                     : controller.type.value,
                                 style: textTheme.bodyMedium?.copyWith(
-                                  color: controller.type.value == '' ? colorScheme.error : colorScheme.onSurface,
-                                  fontWeight: FontWeight.w400,
+                                  color: controller.type.value == '' ? colorScheme.error : colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               const SizedBox(width: 6),

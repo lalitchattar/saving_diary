@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:hugeicons/hugeicons.dart';
 
 class IconsSets {
+
   IconsSets._();
 
   // Convert your list of maps to a single map for fast lookup
@@ -101,7 +104,8 @@ class IconsSets {
     return HugeIcon(icon: iconsMap[key], size: size,); // O(1) lookup
   }
 
+
   static HugeIcon? getIconByKey(String key) {
-    return HugeIcon(icon: iconsMap[key]); // O(1) lookup
+    return HugeIcon(icon: iconsMap[key], color: Color(0xff1f6a4e),); // O(1) lookup
   }
 }

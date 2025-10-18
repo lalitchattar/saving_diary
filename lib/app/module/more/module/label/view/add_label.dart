@@ -58,8 +58,8 @@ class AddLabelScreen extends GetView<LabelController> {
                                   style: textTheme.bodyMedium?.copyWith(
                                     color: controller.name.value == ''
                                         ? colorScheme.error
-                                        : colorScheme.onSurface,
-                                    fontWeight: FontWeight.w400,
+                                        : colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 const SizedBox(width: 6),

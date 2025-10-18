@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:saving_diary/app/module/more/module/account/controller/account_controller.dart';
-import 'package:saving_diary/app/module/more/module/account/view/account_screen.dart';
-import 'package:saving_diary/app/module/more/module/category/controller/category_controller.dart';
-import 'package:saving_diary/app/module/more/module/category/view/category_screen.dart';
-import 'package:saving_diary/app/module/more/module/general/view/general_screen.dart';
-import 'package:saving_diary/app/module/more/module/label/view/label_screen.dart';
-import 'package:saving_diary/app/module/more/module/merchant/controller/merchant_controller.dart';
-import 'package:saving_diary/app/module/more/module/merchant/view/merchant_screen.dart';
+import 'package:saving_diary/app/module/more/module/account/view/general_account_creation_screen.dart';
 
-import '../module/label/controller/label_controller.dart';
-class MoreScreen extends StatelessWidget {
-  const MoreScreen({super.key});
+
+class AccountTypeScreen extends StatelessWidget {
+  const AccountTypeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +13,14 @@ class MoreScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: Text("More"), centerTitle: true),
+      appBar: AppBar(title: Text("Account Type"), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
           Padding(
             padding: EdgeInsets.only(top: 16, bottom: 8),
             child: Text(
-              "Manage",
+              "Cash",
               style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
@@ -54,11 +47,11 @@ class MoreScreen extends StatelessWidget {
                       vertical: 0,
                     ),
                     leading: HugeIcon(
-                      icon: HugeIcons.strokeRoundedBitcoinWallet,
+                      icon: HugeIcons.strokeRoundedBank,
                     ),
                     trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                     title: Text(
-                      "Account",
+                      "Bank Account",
                       style: textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w400,
                         color: colorScheme.onSurface,
@@ -68,9 +61,7 @@ class MoreScreen extends StatelessWidget {
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
                     onTap: () {
-                      Get.to(() => AccountListScreen(), binding: BindingsBuilder((){
-                        Get.lazyPut(() => AccountController(), fenix: true);
-                      }));
+                        Get.to(() => GeneralAccount(title: "Bank Account"));
                     },
                   ),
                 ),
@@ -82,10 +73,10 @@ class MoreScreen extends StatelessWidget {
                     horizontal: 20,
                     vertical: 0,
                   ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedTag01),
+                  leading: HugeIcon(icon: HugeIcons.strokeRoundedCash01),
                   trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                   title: Text(
-                    "Category",
+                    "Cash",
                     style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w400,
                       color: colorScheme.onSurface,
@@ -95,9 +86,7 @@ class MoreScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: () {
-                    Get.to(() => CategoryListScreen(), binding: BindingsBuilder((){
-                      Get.lazyPut(() => CategoryController(), fenix: true);
-                    }));
+
                   },
                 ),
                 Divider(
@@ -108,10 +97,10 @@ class MoreScreen extends StatelessWidget {
                     horizontal: 20,
                     vertical: 0,
                   ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedStore01),
+                  leading: HugeIcon(icon: HugeIcons.strokeRoundedWallet01),
                   trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                   title: Text(
-                    "Merchant",
+                    "Wallet",
                     style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w400,
                       color: colorScheme.onSurface,
@@ -121,35 +110,7 @@ class MoreScreen extends StatelessWidget {
                   dense: true,
                   visualDensity: const VisualDensity(vertical: -2),
                   onTap: () {
-                    Get.to(() => MerchantListScreen(), binding: BindingsBuilder((){
-                      Get.lazyPut(() => MerchantController(), fenix: true);
-                    }));
-                  },
-                ),
-                Divider(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
-                ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 0,
-                  ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedLabel),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
-                  title: Text(
-                    "Label",
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: colorScheme.onSurface,
-                      letterSpacing: 0.15,
-                    ),
-                  ),
-                  dense: true,
-                  visualDensity: const VisualDensity(vertical: -2),
-                  onTap: () {
-                    Get.to(() => LabelListScreen(), binding: BindingsBuilder((){
-                      Get.lazyPut(() => LabelController(), fenix: true);
-                    }));
+
                   },
                 ),
                 Divider(
@@ -162,10 +123,10 @@ class MoreScreen extends StatelessWidget {
                       horizontal: 20,
                       vertical: 0,
                     ),
-                    leading: HugeIcon(icon: HugeIcons.strokeRoundedTransaction),
+                    leading: HugeIcon(icon: HugeIcons.strokeRoundedMoneySend02),
                     trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                     title: Text(
-                      "Transaction",
+                      "Lending",
                       style: textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w400,
                         color: colorScheme.onSurface,
@@ -182,7 +143,7 @@ class MoreScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 16, bottom: 8),
             child: Text(
-              "Settings",
+              "Credit",
               style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
@@ -209,11 +170,11 @@ class MoreScreen extends StatelessWidget {
                       vertical: 0,
                     ),
                     leading: HugeIcon(
-                      icon: HugeIcons.strokeRoundedAccountSetting01,
+                      icon: HugeIcons.strokeRoundedCreditCard,
                     ),
                     trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                     title: Text(
-                      "General",
+                      "Credit Card",
                       style: textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w400,
                         color: colorScheme.onSurface,
@@ -222,92 +183,8 @@ class MoreScreen extends StatelessWidget {
                     ),
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),
-                    onTap: () {Get.to(() => GeneralScreen());},
+                    onTap: () {},
                   ),
-                ),
-                Divider(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
-                ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 0,
-                  ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedDatabaseRestore),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
-                  title: Text(
-                    "Backup & Restore",
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: colorScheme.onSurface,
-                      letterSpacing: 0.15,
-                    ),
-                  ),
-                  dense: true,
-                  visualDensity: const VisualDensity(vertical: -2),
-                ),
-                Divider(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
-                ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 0,
-                  ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedFileExport),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
-                  title: Text(
-                    "Export Data",
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: colorScheme.onSurface,
-                      letterSpacing: 0.15,
-                    ),
-                  ),
-                  dense: true,
-                  visualDensity: const VisualDensity(vertical: -2),
-                ),
-                Divider(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
-                ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 0,
-                  ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedFileImport),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
-                  title: Text(
-                    "Import Data",
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: colorScheme.onSurface,
-                      letterSpacing: 0.15,
-                    ),
-                  ),
-                  dense: true,
-                  visualDensity: const VisualDensity(vertical: -2),
-                ),
-                Divider(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
-                ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 0,
-                  ),
-                  leading: HugeIcon(icon: HugeIcons.strokeRoundedMessageNotification01),
-                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
-                  title: Text(
-                    "Notification",
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: colorScheme.onSurface,
-                      letterSpacing: 0.15,
-                    ),
-                  ),
-                  dense: true,
-                  visualDensity: const VisualDensity(vertical: -2),
                 ),
                 Divider(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.8),
@@ -319,10 +196,10 @@ class MoreScreen extends StatelessWidget {
                       horizontal: 20,
                       vertical: 0,
                     ),
-                    leading: HugeIcon(icon: HugeIcons.strokeRoundedAiSecurity01),
+                    leading: HugeIcon(icon: HugeIcons.strokeRoundedMoneyBag02),
                     trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                     title: Text(
-                      "Security",
+                      "Line of Credit",
                       style: textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w400,
                         color: colorScheme.onSurface,
@@ -339,7 +216,229 @@ class MoreScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 16, bottom: 8),
             child: Text(
-              "About",
+              "Investment",
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.15,
+              ),
+            ),
+          ),
+          Card(
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                color: colorScheme.outline.withValues(alpha: 0.8),
+                width: 0.5,
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 0,
+                    ),
+                    leading: HugeIcon(
+                      icon: HugeIcons.strokeRoundedPayment01,
+                    ),
+                    trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                    title: Text(
+                      "Brokerage",
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: colorScheme.onSurface,
+                        letterSpacing: 0.15,
+                      ),
+                    ),
+                    dense: true,
+                    visualDensity: const VisualDensity(vertical: -2),
+                    onTap: () {
+
+                    },
+                  ),
+                ),
+                Divider(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 0,
+                  ),
+                  leading: HugeIcon(icon: HugeIcons.strokeRoundedMoneySavingJar),
+                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  title: Text(
+                    "Investment",
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: colorScheme.onSurface,
+                      letterSpacing: 0.15,
+                    ),
+                  ),
+                  dense: true,
+                  visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+
+                  },
+                ),
+                Divider(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 0,
+                  ),
+                  leading: HugeIcon(icon: HugeIcons.strokeRoundedShield02),
+                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  title: Text(
+                    "Insurance",
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: colorScheme.onSurface,
+                      letterSpacing: 0.15,
+                    ),
+                  ),
+                  dense: true,
+                  visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+
+                  },
+                ),
+                Divider(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 0,
+                    ),
+                    leading: HugeIcon(icon: HugeIcons.strokeRoundedBitcoinWallet),
+                    trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                    title: Text(
+                      "Crypto",
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: colorScheme.onSurface,
+                        letterSpacing: 0.15,
+                      ),
+                    ),
+                    dense: true,
+                    visualDensity: const VisualDensity(vertical: -2),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 16, bottom: 8),
+            child: Text(
+              "Loans",
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.15,
+              ),
+            ),
+          ),
+          Card(
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                color: colorScheme.outline.withValues(alpha: 0.8),
+                width: 0.5,
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 0,
+                    ),
+                    leading: HugeIcon(
+                      icon: HugeIcons.strokeRoundedMoneyReceiveFlow01,
+                    ),
+                    trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                    title: Text(
+                      "Loan",
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: colorScheme.onSurface,
+                        letterSpacing: 0.15,
+                      ),
+                    ),
+                    dense: true,
+                    visualDensity: const VisualDensity(vertical: -2),
+                    onTap: () {
+
+                    },
+                  ),
+                ),
+                Divider(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 0,
+                  ),
+                  leading: HugeIcon(icon: HugeIcons.strokeRoundedMoneySend02),
+                  trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                  title: Text(
+                    "Mortgage",
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: colorScheme.onSurface,
+                      letterSpacing: 0.15,
+                    ),
+                  ),
+                  dense: true,
+                  visualDensity: const VisualDensity(vertical: -2),
+                  onTap: () {
+
+                  },
+                ),
+                Divider(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.8),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 0,
+                    ),
+                    leading: HugeIcon(icon: HugeIcons.strokeRoundedInvoice01),
+                    trailing: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+                    title: Text(
+                      "Borrowing",
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: colorScheme.onSurface,
+                        letterSpacing: 0.15,
+                      ),
+                    ),
+                    dense: true,
+                    visualDensity: const VisualDensity(vertical: -2),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 16, bottom: 8),
+            child: Text(
+              "Assets",
               style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
@@ -366,18 +465,11 @@ class MoreScreen extends StatelessWidget {
                       vertical: 0,
                     ),
                     leading: HugeIcon(
-                      icon: HugeIcons.strokeRoundedInformationCircle,
+                      icon: HugeIcons.strokeRoundedPropertyNew,
                     ),
-                    trailing: Text(
-                      "1.0.0",
-                      style: textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: colorScheme.onSurface,
-                        letterSpacing: 0.15,
-                      ),
-                    ),
+                    trailing:  HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                     title: Text(
-                      "App Version",
+                      "Property",
                       style: textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w400,
                         color: colorScheme.onSurface,

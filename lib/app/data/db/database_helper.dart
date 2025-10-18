@@ -25,6 +25,8 @@ class DatabaseHelper {
         await _createLabelTable(db);
         await _createMerchantTable(db);
         await _createCategoryTable(db);
+        await _createAccountTable(db);
+        await _createAccountDepositDetailsTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         // Future upgrades can be handled here
@@ -114,6 +116,54 @@ class DatabaseHelper {
         ('Internet Bill', 'Expense', 'Internet'),
         ('Telephone Bill', 'Expense', 'Telephone'),
         ('Insurance', 'Expense', 'CreditCard');
+    ''');
+  }
+
+
+  Future<void> _createAccountTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS accounts (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          type TEXT NOT NULL,             -- e.g. 'bank', 'credit_card', 'fd', 'crypto'
+          category TEXT,                  -- 'asset', 'liability', 'investment'
+          institution_name TEXT,
+          account_number TEXT,
+          balance REAL DEFAULT 0.0,       -- current outstanding value
+          credit_limit REAL,
+          outstanding_balance REAL DEFAULT 0.0,
+          interest_rate REAL,
+          billing_date TEXT,
+          due_date TEXT,
+          show_in_net_worth INTEGER DEFAULT 0,
+          is_active INTEGER DEFAULT 1,
+          is_deleted INTEGER DEFAULT 0,
+          created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+      );
+    ''');
+  }
+
+
+  Future<void> _createAccountDepositDetailsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS account_deposit_details (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          account_id INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+          deposit_type TEXT CHECK(deposit_type IN ('fd','rd')) NOT NULL,
+          principal_amount REAL NOT NULL,
+          recurring_amount REAL,             -- only for RD
+          start_date TEXT NOT NULL,
+          maturity_date TEXT NOT NULL,
+          interest_rate REAL NOT NULL,
+          compounding_frequency TEXT DEFAULT 'quarterly', -- quarterly/yearly/etc.
+          maturity_value REAL,               -- precomputed future value
+          current_value REAL,                -- optional cache of accrued value
+          term_months INTEGER,
+          notes TEXT,
+          created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+
     ''');
   }
 
