@@ -136,6 +136,7 @@ class DatabaseHelper {
           billing_date TEXT,
           due_date TEXT,
           show_in_net_worth INTEGER DEFAULT 0,
+          transaction_count INTEGER DEFAULT 0,
           is_active INTEGER DEFAULT 1,
           is_deleted INTEGER DEFAULT 0,
           created_at TEXT DEFAULT CURRENT_TIMESTAMP,

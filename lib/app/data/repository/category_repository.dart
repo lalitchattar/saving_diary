@@ -80,8 +80,8 @@ class CategoryRepository {
       final db = await dbHelper.database;
       final result = await db.query(
         'categories',
-        where: 'name = ?',
-        whereArgs: [name],
+        where: 'name = ? and is_deleted = ?',
+        whereArgs: [name, 0],
         limit: 1,
       );
 

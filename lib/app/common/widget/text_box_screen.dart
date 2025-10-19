@@ -4,6 +4,7 @@ class SingleTextInputScreen extends StatefulWidget {
   final String title;
   final String hintText;
   final String? initialValue;
+  final TextInputType? textInputType;
   final Future<String?> Function(String)? validator;
   final Function(String) onValidSubmit;
 
@@ -12,6 +13,7 @@ class SingleTextInputScreen extends StatefulWidget {
     required this.title,
     required this.hintText,
     this.initialValue,
+    this.textInputType = TextInputType.text,
     this.validator,
     required this.onValidSubmit,
   });
@@ -118,6 +120,7 @@ class _SingleTextInputScreenState extends State<SingleTextInputScreen> {
                   // --- Text Input ---
                   TextField(
                     controller: controller,
+                    keyboardType: widget.textInputType,
                     decoration: InputDecoration(
                       hintText: widget.hintText,
                       filled: true,

@@ -5,6 +5,8 @@ import 'package:saving_diary/app/module/more/module/account/controller/account_c
 import 'package:saving_diary/app/module/more/module/account/view/account_type_selection_screen.dart';
 import 'package:saving_diary/app/utils/utility.dart';
 
+import '../../general/controller/general_setting_controller.dart';
+
 
 class AccountListScreen extends GetView<AccountController> {
   const AccountListScreen({super.key});
@@ -30,8 +32,8 @@ class AccountListScreen extends GetView<AccountController> {
           icon: const Icon(Icons.add),
           label: const Text("Add Account"),
           onPressed: () {
-            //controller.reset();
-            //Get.to(() => AddLabelScreen());
+            controller.reset();
+            Get.to(() => AccountTypeScreen());
           },
         )
             : null,
@@ -105,6 +107,7 @@ class AccountListScreen extends GetView<AccountController> {
       ColorScheme colorScheme,
       TextTheme textTheme,
       ) {
+    var generalController = Get.find<GeneralSettingsController>();
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       itemCount: controller.accounts.length,
@@ -139,8 +142,8 @@ class AccountListScreen extends GetView<AccountController> {
                     children: [
                       CircleAvatar(
                           radius: 24,
-                          backgroundColor: getColorFromHex("#000000"),
-                          child: HugeIcon(icon: HugeIcons.strokeRoundedLabel, size: 22,)
+                          backgroundColor: colorScheme.primaryContainer.withOpacity(0.3),
+                          child: _getAccountTypeIcon(account.type)
                       ),
                       if (account.isActive)
                         Positioned(
@@ -183,13 +186,28 @@ class AccountListScreen extends GetView<AccountController> {
 
                   // Label name
                   Expanded(
-                    child: Text(
-                      account.name,
-                      style: textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: colorScheme.onSurface,
-                        fontSize: 16,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          account.name,
+                          style: textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: colorScheme.onSurface,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          account.type, // <-- showing merchant type here
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -208,7 +226,7 @@ class AccountListScreen extends GetView<AccountController> {
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Text(
-                          '${account.transactionCount}',
+                          "${generalController.getSetting("currency")} ${formatNumber(account.balance, pattern: generalController.getSetting("decimalFormat"))}",
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSecondaryContainer,
                             fontWeight: FontWeight.w600,
@@ -217,8 +235,8 @@ class AccountListScreen extends GetView<AccountController> {
                         ),
                       ),
                       const SizedBox(height: 3),
-                      Text(
-                        'Transaction${account.transactionCount > 1 ? 's' : ''}',
+                      if(account.accountNumber != '')  Text(
+                        maskString(account.accountNumber.toString()),
                         style: textTheme.labelSmall?.copyWith(
                           color: colorScheme.secondary,
                           fontWeight: FontWeight.w500,
@@ -234,5 +252,19 @@ class AccountListScreen extends GetView<AccountController> {
         );
       },
     );
+  }
+
+  _getAccountTypeIcon(String accountType) {
+    switch (accountType) {
+      case "Bank Account":
+        return HugeIcon(icon: HugeIcons.strokeRoundedBank, size: 22,);
+      case "Cash":
+        return HugeIcon(icon: HugeIcons.strokeRoundedCash01, size: 22,);
+      case "Wallet":
+        return HugeIcon(icon: HugeIcons.strokeRoundedWallet01, size: 22,);
+      default:
+        return HugeIcon(icon: HugeIcons.strokeRoundedBank, size: 22,);
+
+    }
   }
 }

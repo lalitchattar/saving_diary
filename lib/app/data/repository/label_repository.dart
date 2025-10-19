@@ -81,8 +81,8 @@ class LabelRepository {
       final db = await dbHelper.database;
       final result = await db.query(
         'labels',
-        where: 'name = ?',
-        whereArgs: [name],
+        where: 'name = ? and is_deleted = ?',
+        whereArgs: [name, 0],
         limit: 1,
       );
 
